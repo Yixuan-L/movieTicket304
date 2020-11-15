@@ -79,6 +79,26 @@ public class DatabaseConnectionHandler {
         return models.toArray(new TheatreModel[models.size()]);
     }
 
+    public void updateTheaters(int id, String name) {
+        try {
+            PreparedStatement ps = connection.prepareStatement("UPDATE branch SET branch_name = ? WHERE branch_id = ?");
+            ps.setString(1, name);
+            ps.setInt(2, id);
+
+            int rowCount = ps.executeUpdate();
+            if (rowCount == 0) {
+                System.out.println(WARNING_TAG + " Branch " + id + " does not exist!");
+            }
+
+            connection.commit();
+
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            rollbackConnection();
+        }
+    }
+
     public HallModel[] showHalls() {
         ArrayList<HallModel> models = new ArrayList<>();
         try {

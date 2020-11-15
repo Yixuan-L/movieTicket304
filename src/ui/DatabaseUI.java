@@ -1,9 +1,12 @@
 package ui;
 
 import delegates.DatabaseDelegate;
+import delegates.FeaturesDelegate;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class DatabaseUI extends JFrame {
 
@@ -24,6 +27,8 @@ public class DatabaseUI extends JFrame {
 
 
         JButton customerButton = new JButton("Customers");
+
+        JButton featuresButton = new JButton("Features");
 
 
         JPanel contentPane = new JPanel();
@@ -75,6 +80,11 @@ public class DatabaseUI extends JFrame {
         gb.setConstraints(customerButton, c);
         contentPane.add(customerButton);
 
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0, 0, 10, 0);
+        gb.setConstraints(featuresButton, c);
+        contentPane.add(featuresButton);
+
 
         customerButton.addActionListener(e -> this.delegate.showCustomers());
         theatreButton.addActionListener(e -> this.delegate.showTheaters());
@@ -83,7 +93,44 @@ public class DatabaseUI extends JFrame {
         hallButton.addActionListener(e -> this.delegate.showHalls());
         orderButton.addActionListener(e -> this.delegate.showOrders());
 
-        // size the window to obtain a best fit for the components
+        //跳转到功能页面
+        featuresButton.addActionListener(e -> {
+            close();
+            new FeaturesUI().showFrame(new FeaturesDelegate() {
+                @Override
+                public void search() {
+
+                }
+
+                @Override
+                public void reserve() {
+
+                }
+
+                @Override
+                public void ticketConversion() {
+
+                }
+
+                @Override
+                public void saleReport() {
+
+                }
+
+                @Override
+                public void movieReport() {
+
+                }
+
+                @Override
+                public void branchSalesReport() {
+
+                }
+            });
+        });
+
+
+                // size the window to obtain a best fit for the components
         this.pack();
 
         // center the frame
@@ -95,4 +142,7 @@ public class DatabaseUI extends JFrame {
         this.setVisible(true);
     }
 
+    public void close() {
+        this.dispose();
+    }
 }
