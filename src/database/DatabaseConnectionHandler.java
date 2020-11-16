@@ -6,8 +6,8 @@ import java.util.ArrayList;
 
 public class DatabaseConnectionHandler {
     private static final String ORACLE_URL = "jdbc:oracle:thin:@localhost:1522:stu";
-    private static final String ORACLE_USERNAME = "ora_yixuan19";
-    private static final String ORACLE_PASSWORD = "a61261814";
+    private static final String ORACLE_USERNAME = "ora_edisonsu";
+    private static final String ORACLE_PASSWORD = "a78526092";
 
     private static final String EXCEPTION_TAG = "[EXCEPTION]";
     private static final String WARNING_TAG = "[WARNING]";
@@ -149,17 +149,16 @@ public class DatabaseConnectionHandler {
     public CustomerModel[] showCustomers() {
         ArrayList<CustomerModel> models = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM CUSTOMERS";
+            String sql = "SELECT * FROM CUSTOMER";
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
                 CustomerModel model = new CustomerModel(
-                        rs.getString(1),
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6));
+                        rs.getString(5));
                 models.add(model);
             }
             rs.close();

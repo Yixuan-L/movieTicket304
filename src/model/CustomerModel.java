@@ -2,7 +2,7 @@ package model;
 
 public class CustomerModel {
 
-    private String customerid;
+    private int customerid;
     private String phone;
     private String name;
     private String birthday;
@@ -22,7 +22,7 @@ public class CustomerModel {
         return name;
     }
 
-    public String getCustomerid() {
+    public int getCustomerid() {
         return customerid;
     }
 
@@ -34,11 +34,11 @@ public class CustomerModel {
         return address;
     }
 
-    public CustomerModel(String customerid, String phone, String name, String birthdate, String address, String email) {
+    public CustomerModel(int customerid, String name, String address, String email, String phone) {
         this.customerid = customerid;
         this.phone = phone;
         this.name = name;
-        this.birthday = birthdate;
+//        this.birthday = birthdate;
         this.address = address;
         this.email = email;
     }
