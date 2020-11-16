@@ -8,7 +8,7 @@
       </database-info>
       <case-sensitivity plain-identifiers="upper" quoted-identifiers="exact" />
       <secret-storage>master_key</secret-storage>
-      <user-name>ora_edisonsu</user-name>
+      <user-name>ora_xchenhao</user-name>
       <schema-mapping>
         <introspection-scope>
           <node kind="schema">
@@ -19,7 +19,7 @@
       </schema-mapping>
       <ssh-properties>
         <enabled>true</enabled>
-        <ssh-config-id>e1034ea7-7e1a-4d02-a073-b4f8ee786f55</ssh-config-id>
+        <ssh-config-id>ca5a4ea5-7b95-4eb4-93af-8cc78ccf5425</ssh-config-id>
       </ssh-properties>
     </data-source>
   </component>
