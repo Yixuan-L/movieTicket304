@@ -2,6 +2,7 @@ package delegates;
 
 import model.BranchRevenueModel;
 import model.BranchTicketModel;
+import model.CustomerModel;
 import model.FormatPrice;
 
 public interface DatabaseDelegate {
@@ -21,6 +22,7 @@ public interface DatabaseDelegate {
     BranchRevenueModel[] branchRevenue();
     BranchTicketModel[] branchTicket();
     FormatPrice[] formatPrice();
+    void customerAllMovie();
 
     boolean deleteMovie(String moviename);
 

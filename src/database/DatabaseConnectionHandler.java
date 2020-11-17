@@ -471,6 +471,43 @@ public class DatabaseConnectionHandler {
         return models.toArray(new FormatPrice[models.size()]);
     }
 
+    //find the customer information for who bought all movies
+    public CustomerModel[] customerAllMovie (){
+        ArrayList<CustomerModel> models = new ArrayList<>();
+        String sql;
+
+
+        sql = "select *\n" +
+                "from customer c\n" +
+                "where not exists\n" +
+                "          (select m.movie_id\n" +
+                "          from movie m\n" +
+                "          where not exists\n" +
+                "          (select r.customer_id\n" +
+                "          from  reservation r\n" +
+                "          where r.movie_id = m.movie_id and r.customer_id = c.customer_id))";
+        try {
+            // System.out.println(sql);
+            Statement  statement = connection.createStatement();
+            ResultSet res = statement.executeQuery(sql);
+
+            while (res.next()) {
+                CustomerModel model = new CustomerModel(
+                        res.getInt(1),
+                        res.getString(2),
+                        res.getString(3),
+                        res.getString(4),
+                        res.getString(5));
+                models.add(model);
+            }
+            res.close();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        return models.toArray(new CustomerModel[models.size()]);
+    }
+
 
 
 

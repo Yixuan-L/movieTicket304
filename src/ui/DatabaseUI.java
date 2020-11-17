@@ -159,6 +159,17 @@ public class DatabaseUI extends JFrame {
         contentPane.add(formatPriceButton);
         formatPriceButton.addActionListener(e -> this.delegate.formatPrice());
 
+        //button test for customer buy all movies
+        JButton CustomerAllMovieButton = new JButton("Customer_all_movie");
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0, 0, 10, 0);
+        gb.setConstraints(CustomerAllMovieButton, c);
+        contentPane.add(CustomerAllMovieButton);
+        CustomerAllMovieButton.addActionListener(e -> this.delegate.customerAllMovie());
+
+
+
+
         //跳转到功能页面
         featuresButton.addActionListener(e -> {
             close();

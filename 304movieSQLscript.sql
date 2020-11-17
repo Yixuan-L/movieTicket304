@@ -77,6 +77,10 @@ insert into payment(payment_amount)values(30.0);
 insert into payment(payment_amount)values(30.0);
 insert into payment(payment_amount)values(30.0);
 
+insert into payment(payment_amount)values (35.0);
+insert into payment(payment_amount)values (40.0);
+insert into payment(payment_amount)values(35.0);
+
 create table cash(
   payment_id integer primary key,
   receive_amount double,
@@ -102,6 +106,13 @@ insert into card(payment_id, card_number, cvv) values
 (5, 4607897011234451, 998);
 insert into card(payment_id, card_number, cvv) values
 (6, 4506774899706542, 786);
+
+insert into card(payment_id, card_number, cvv) values
+(7, 4506774899706542, 786);
+insert into card(payment_id, card_number, cvv) values
+(8, 4506774899706542, 786);
+insert into card(payment_id, card_number, cvv) values
+(9, 4506774899706542, 786);
 
 create table reservation(
   confirmation_number integer auto_increment primary key,
@@ -129,6 +140,15 @@ insert into reservation(order_time, branch_name, movie_id, payment_id, customer_
 insert into reservation(order_time, branch_name, movie_id, payment_id, customer_id)values
 ('20201116200000', 'theatre1', 4, 6, 5);
 
+insert into reservation(order_time, branch_name, movie_id, payment_id, customer_id)values
+('20201116200000', 'theatre1', 1, 7, 5);
+insert into reservation(order_time, branch_name, movie_id, payment_id, customer_id)values
+('20201116200000', 'theatre1', 2, 8, 5);
+insert into reservation(order_time, branch_name, movie_id, payment_id, customer_id)values
+('20201116200000', 'theatre1', 5, 9, 5);
+
+
+
 
 create table ticket(
   ticket_number integer auto_increment primary key,
@@ -151,6 +171,14 @@ insert into ticket(confirmation_number, movie_start_time, seat_id, hall_id) valu
 (5, '20201117100000', 'B10', '3' );
 insert into ticket(confirmation_number, movie_start_time, seat_id, hall_id) values
 (6, '20201117200000', 'F08', '4' );
+
+insert into ticket(confirmation_number, movie_start_time, seat_id, hall_id) values
+(7, '20201117100000', 'F08', '4' );
+insert into ticket(confirmation_number, movie_start_time, seat_id, hall_id) values
+(8, '20201118200000', 'F08', '4' );
+insert into ticket(confirmation_number, movie_start_time, seat_id, hall_id) values
+(9, '20201119200000', 'F08', '4' );
+
 
 
 

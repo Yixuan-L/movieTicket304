@@ -94,6 +94,13 @@ public class movieTicket implements
     public FormatPrice[] formatPrice(){
         return dbHandler.formatPrice();
     }
+//
+    @Override
+    public void customerAllMovie() {
+        CustomerModel[] models = dbHandler.customerAllMovie();
+        CustomersAllMovieUI ui = new CustomersAllMovieUI((models));
+        ui.showFrame();
+    }
 
     @Override
     public boolean deleteMovie(String moviename ) {
