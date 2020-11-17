@@ -101,6 +101,40 @@ public class DatabaseUI extends JFrame {
         contentPane.add(updateCustomerButton);
         updateCustomerButton.addActionListener(e -> this.delegate.updateCustomer( 1, new String[]{"newname1", "newaddress1", "newemail1", "new2323323"}));
 
+        // 暂时直接设置一个按钮测试 user pay by cash
+        JButton payCashButton = new JButton("paycash");
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0, 0, 10, 0);
+        gb.setConstraints(payCashButton, c);
+        contentPane.add(payCashButton);
+        payCashButton.addActionListener(e -> this.delegate.makePaymentCash( 40));
+
+        // 暂时直接设置一个按钮测试 user pay by card
+        JButton payCardButton = new JButton("paycard");
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0, 0, 10, 0);
+        gb.setConstraints(payCardButton, c);
+        contentPane.add(payCardButton);
+        payCardButton.addActionListener(e -> this.delegate.makePaymentCard( 50, "4566778899999999", "998"));
+
+
+        // 暂时直接设置一个按钮测试 delete one movie
+        JButton deleteMovieButton = new JButton("deleteMovie");
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0, 0, 10, 0);
+        gb.setConstraints(deleteMovieButton, c);
+        contentPane.add(deleteMovieButton);
+        deleteMovieButton.addActionListener(e -> this.delegate.deleteMovie("2012"));
+
+
+        // 暂时直接设置一个按钮测试 add reservation (order)
+        JButton generateOrderButton = new JButton("addReservation");
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0, 0, 10, 0);
+        gb.setConstraints(generateOrderButton, c);
+        contentPane.add(generateOrderButton);
+        generateOrderButton.addActionListener(e -> this.delegate.createReservation("theatre1", "2012", "English", "2D", "Mike",8 ));
+
 
         //跳转到功能页面
         featuresButton.addActionListener(e -> {

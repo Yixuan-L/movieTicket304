@@ -67,8 +67,30 @@ public class movieTicket implements
     }
 
     @Override
+    public int makePaymentCash(int amount) {
+        return dbHandler.makePaymentCash(amount);
+    }
+
+    @Override
+    public int makePaymentCard(int amount, String cardnumber, String cvv) {
+        return dbHandler.makePaymentCard(amount, cardnumber, cvv);
+    }
+
+    @Override
     public void updateCustomer(int id , String[] updateInfo) {
         dbHandler.updateCustomer(id, updateInfo);
+    }
+
+
+
+    @Override
+    public boolean deleteMovie(String moviename ) {
+        return dbHandler.deleteMovie(moviename);
+    }
+
+    @Override
+    public boolean createReservation ( String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id ) {
+        return dbHandler.createReservation (  branch_name,  movie_name, movie_language, movie_format, customer_name , payment_id);
     }
 
     public static void main(String[] args){
