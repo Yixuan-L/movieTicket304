@@ -82,6 +82,18 @@ public class movieTicket implements
     }
 
 
+//加上ui后需要override
+    public BranchRevenueModel[] branchRevenue(){
+        return dbHandler.branchRevenue();
+    }
+    //加上ui后需要override
+    public BranchTicketModel[] branchTicket(){
+        return dbHandler.branchticket();
+    }
+    //加上ui后需要override
+    public FormatPrice[] formatPrice(){
+        return dbHandler.formatPrice();
+    }
 
     @Override
     public boolean deleteMovie(String moviename ) {

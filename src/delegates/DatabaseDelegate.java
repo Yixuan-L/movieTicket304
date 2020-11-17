@@ -1,5 +1,9 @@
 package delegates;
 
+import model.BranchRevenueModel;
+import model.BranchTicketModel;
+import model.FormatPrice;
+
 public interface DatabaseDelegate {
 
 
@@ -14,6 +18,9 @@ public interface DatabaseDelegate {
     int makePaymentCard(int amount, String cardnumber, String cvv);
     boolean createReservation ( String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id );
 
+    BranchRevenueModel[] branchRevenue();
+    BranchTicketModel[] branchTicket();
+    FormatPrice[] formatPrice();
 
     boolean deleteMovie(String moviename);
 

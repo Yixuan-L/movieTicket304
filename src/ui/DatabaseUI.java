@@ -135,6 +135,29 @@ public class DatabaseUI extends JFrame {
         contentPane.add(generateOrderButton);
         generateOrderButton.addActionListener(e -> this.delegate.createReservation("theatre1", "2012", "English", "2D", "Mike",8 ));
 
+        //button test for branchRevenue
+        JButton branchRevenueButton = new JButton("branch_Revenue");
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0, 0, 10, 0);
+        gb.setConstraints(branchRevenueButton, c);
+        contentPane.add(branchRevenueButton);
+        branchRevenueButton.addActionListener(e -> this.delegate.branchRevenue());
+
+        //button test for branchRevenue
+        JButton branchTicketButton = new JButton("branch_Ticket");
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0, 0, 10, 0);
+        gb.setConstraints(branchTicketButton, c);
+        contentPane.add(branchTicketButton);
+        branchTicketButton.addActionListener(e -> this.delegate.branchTicket());
+
+        //button test for format_price
+        JButton formatPriceButton = new JButton("format_Price");
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0, 0, 10, 0);
+        gb.setConstraints(formatPriceButton, c);
+        contentPane.add(formatPriceButton);
+        formatPriceButton.addActionListener(e -> this.delegate.formatPrice());
 
         //跳转到功能页面
         featuresButton.addActionListener(e -> {

@@ -1,7 +1,7 @@
 package model;
 
 public class MovieModel {
-    private String movieid;
+    private int movieid;
     private String dType;
     private double price;
     private String name;
@@ -11,7 +11,7 @@ public class MovieModel {
     private String rating;
     private int activeDate;
 
-    public MovieModel(String movieid, String dType, double price, String name, String language, String genre, String duration, String rating, int activeDate) {
+    public MovieModel(int movieid, String dType, double price, String name, String language, String genre, String duration, String rating, int activeDate) {
         this.movieid = movieid;
         this.dType = dType;
         this.price = price;
@@ -23,7 +23,7 @@ public class MovieModel {
         this.activeDate = activeDate;
     }
 
-    public String getMovieid() {
+    public int getMovieid() {
         return movieid;
     }
 
@@ -59,8 +59,5 @@ public class MovieModel {
         return rating;
     }
 
-    public void setActiveDate(int activeDate) {
-        this.activeDate = activeDate;
-    }
 
 }

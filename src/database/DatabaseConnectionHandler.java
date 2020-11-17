@@ -9,7 +9,7 @@ public class DatabaseConnectionHandler {
     //    private static final String ORACLE_URL = "jdbc:oracle:thin:@localhost:1522:stu";
     private static final String ORACLE_URL = "jdbc:mysql://localhost:3306/304movie?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
     private static final String ORACLE_USERNAME = "root";
-    private static final String ORACLE_PASSWORD = "houzi25252525";
+    private static final String ORACLE_PASSWORD = "esther417";
 
     private static final String EXCEPTION_TAG = "[EXCEPTION]";
     private static final String WARNING_TAG = "[WARNING]";
@@ -368,6 +368,110 @@ public class DatabaseConnectionHandler {
         }
         return false;
     }
+
+    //branch 营业额---report--show all branches
+    public BranchRevenueModel[] branchRevenue (){
+        ArrayList<BranchRevenueModel> models = new ArrayList<>();
+        String sql;
+        String branch;
+        double amount;
+
+        sql = "select th.branch_name, sum(p.payment_amount)\n" +
+                "from theatre th, reservation r, payment p\n" +
+                "where th.branch_name = r.branch_name and r.payment_id = p.payment_id\n" +
+                "group by th.branch_name";
+        try {
+           // System.out.println(sql);
+            Statement  statement = connection.createStatement();
+            ResultSet res = statement.executeQuery(sql);
+
+            while ( res.next()) {
+                branch = res.getString(1);
+                System.out.println(branch);
+
+                amount = res.getDouble(2);
+                System.out.println(amount);
+                BranchRevenueModel model = new BranchRevenueModel(branch, amount);
+                models.add(model);
+            }
+            res.close();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        return models.toArray(new BranchRevenueModel[models.size()]);
+    }
+    //show the sold tickets for each branch, only show the branch sells more than 3 tickets
+    public BranchTicketModel[] branchticket (){
+        ArrayList<BranchTicketModel> models = new ArrayList<>();
+        String sql;
+        String branch;
+        int ticket;
+
+        sql = "select th.branch_name, COUNT(ticket_number)\n" +
+                "from theatre th, ticket t, reservation r\n" +
+                "where th.branch_name = r.branch_name and t.confirmation_number = r.confirmation_number\n" +
+                "group by th.branch_name\n" +
+                "having count(ticket_number) > 3";
+        try {
+            // System.out.println(sql);
+            Statement  statement = connection.createStatement();
+            ResultSet res = statement.executeQuery(sql);
+
+            while ( res.next()) {
+                branch = res.getString(1);
+                System.out.println(branch);
+
+                ticket = res.getInt(2);
+                System.out.println(ticket);
+                BranchTicketModel model = new BranchTicketModel(branch, ticket);
+                models.add(model);
+            }
+            res.close();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        return models.toArray(new BranchTicketModel[models.size()]);
+    }
+
+    //find average price for 2d and 3d movies, requiring each format has at least 2 movies
+    public FormatPrice[] formatPrice (){
+        ArrayList<FormatPrice> models = new ArrayList<>();
+        String sql;
+        String format;
+        double price;
+
+        sql = "select format, AVG(movie_price)\n" +
+                "from movie m, movieprice mp\n" +
+                "where m.movie_id = mp.movie_id\n" +
+                "group by format\n" +
+                "having 1 < (select count(*)\n" +
+                "\t\tfrom movie m2\n" +
+                "\t\twhere m.format = m2.format)";
+        try {
+            // System.out.println(sql);
+            Statement  statement = connection.createStatement();
+            ResultSet res = statement.executeQuery(sql);
+
+            while (res.next()) {
+                format = res.getString(1);
+                System.out.println(format);
+
+                price = res.getInt(2);
+                System.out.println(price);
+                FormatPrice model = new FormatPrice(format,  price);
+                models.add(model);
+            }
+            res.close();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        return models.toArray(new FormatPrice[models.size()]);
+    }
+
+
 
 
 
