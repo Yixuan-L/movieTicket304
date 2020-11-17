@@ -17,7 +17,7 @@ public class ShowCustomersUI extends JFrame {
     public void showFrame() {
         String[][] tableContent = new String[models.length][5];
         for (int i = 0; i < models.length; i++) {
-            System.out.println(models[i].getCustomerid());
+           System.out.println(models[i].getCustomerid());
             tableContent[i][0] = String.valueOf(models[i].getCustomerid()).strip();
             System.out.println(models[i].getPhone().strip());
             tableContent[i][1] = models[i].getName().strip();

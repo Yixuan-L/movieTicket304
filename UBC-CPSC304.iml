@@ -8,6 +8,7 @@
     <orderEntry type="jdk" jdkName="openjdk-15" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="ojdbc8" level="project" />
-    <orderEntry type="library" name="mysql-connector-java-8.0.18" level="project" />
+    <orderEntry type="library" name="mysql-connector-java" level="project" />
+    <orderEntry type="library" name="mysql:mysql-connector-java:8.0.22" level="project" />
   </component>
 </module>

@@ -66,6 +66,11 @@ public class movieTicket implements
         ui.showFrame();
     }
 
+    @Override
+    public void updateCustomer(int id , String[] updateInfo) {
+        dbHandler.updateCustomer(id, updateInfo);
+    }
+
     public static void main(String[] args){
         movieTicket ticket = new movieTicket();
         ticket.start();

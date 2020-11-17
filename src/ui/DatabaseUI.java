@@ -93,6 +93,15 @@ public class DatabaseUI extends JFrame {
         hallButton.addActionListener(e -> this.delegate.showHalls());
         orderButton.addActionListener(e -> this.delegate.showOrders());
 
+        // 暂时直接设置一个按钮测试update customer info
+        JButton updateCustomerButton = new JButton("updateCutomerInfo");
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0, 0, 10, 0);
+        gb.setConstraints(updateCustomerButton, c);
+        contentPane.add(updateCustomerButton);
+        updateCustomerButton.addActionListener(e -> this.delegate.updateCustomer( 1, new String[]{"newname1", "newaddress1", "newemail1", "new2323323"}));
+
+
         //跳转到功能页面
         featuresButton.addActionListener(e -> {
             close();

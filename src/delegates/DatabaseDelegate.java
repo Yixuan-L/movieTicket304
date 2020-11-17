@@ -9,5 +9,6 @@ public interface DatabaseDelegate {
     void showTickets();
     void showSeats();
     void showOrders();
+    void updateCustomer(int id , String[] updateInfo);
 
 }

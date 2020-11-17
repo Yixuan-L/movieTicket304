@@ -3,11 +3,13 @@ package database;
 import model.*;
 import java.sql.*;
 import java.util.ArrayList;
+import com.mysql.jdbc.Driver;
 
 public class DatabaseConnectionHandler {
-    private static final String ORACLE_URL = "jdbc:oracle:thin:@localhost:1522:stu";
-    private static final String ORACLE_USERNAME = "ora_edisonsu";
-    private static final String ORACLE_PASSWORD = "a78526092";
+//    private static final String ORACLE_URL = "jdbc:oracle:thin:@localhost:1522:stu";
+    private static final String ORACLE_URL = "jdbc:mysql://localhost:3306/304movie?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
+    private static final String ORACLE_USERNAME = "root";
+    private static final String ORACLE_PASSWORD = "houzi25252525";
 
     private static final String EXCEPTION_TAG = "[EXCEPTION]";
     private static final String WARNING_TAG = "[WARNING]";
@@ -24,12 +26,15 @@ public class DatabaseConnectionHandler {
 
     public boolean connectToOracle() {
         try {
+            System.out.println("sssssssssssssssssssasdsad");
             if (connection != null)
                 connection.close();
+
             connection = DriverManager.getConnection(ORACLE_URL, ORACLE_USERNAME, ORACLE_PASSWORD);
             connection.setAutoCommit(false);
             System.out.println("\nConnected to Oracle!");
             return true;
+
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             return false;
@@ -58,11 +63,17 @@ public class DatabaseConnectionHandler {
     public TheatreModel[] showTheaters() {
         ArrayList<TheatreModel> models = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM THEATERS";
+            String sql = "SELECT * FROM THEATER";
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
+                System.out.println(rs.getString(1));
+                System.out.println(rs.getString(2));
+                System.out.println(rs.getString(3));
+                System.out.println(rs.getString(4));
+                System.out.println(rs.getString(5));
                 TheatreModel model = new TheatreModel(
+
                         rs.getString(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -81,9 +92,39 @@ public class DatabaseConnectionHandler {
 
     public void updateTheaters(int id, String name) {
         try {
-            PreparedStatement ps = connection.prepareStatement("UPDATE branch SET branch_name = ? WHERE branch_id = ?");
+            PreparedStatement ps = connection.prepareStatement("UPDATE theater SET  = ? WHERE branch_id = ?");
             ps.setString(1, name);
             ps.setInt(2, id);
+
+            int rowCount = ps.executeUpdate();
+            if (rowCount == 0) {
+                System.out.println(WARNING_TAG + " Branch " + id + " does not exist!");
+            }
+
+            connection.commit();
+
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            rollbackConnection();
+        }
+    }
+
+
+    public void updateCustomer(int id, String[] updateInfo) {
+        try {
+//            String[] column = new String[]{"name", "address", "email", "phoneNumber"};
+//            String query = "UPDATE theater SET"
+//            for(int i = 0; i < column.length; i++){
+//
+//            }
+            String query = "Update customer set name = ?, address = ?, email = ?, phoneNumber= ? where customer_id= ?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, updateInfo[0]);
+            ps.setString(2, updateInfo[1] );
+            ps.setString(3, updateInfo[2]);
+            ps.setString(4, updateInfo[3]);
+            ps.setInt(5, id);
 
             int rowCount = ps.executeUpdate();
             if (rowCount == 0) {
@@ -172,7 +213,7 @@ public class DatabaseConnectionHandler {
     public TicketModel[] showTickets() {
         ArrayList<TicketModel> models = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM TICKETS";
+            String sql = "SELECT * FROM TICKET";
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
@@ -181,8 +222,8 @@ public class DatabaseConnectionHandler {
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
-                        rs.getString(5),
-                        rs.getString(6));
+                        rs.getString(5));
+//                        rs.getString(6));
                 models.add(model);
             }
             rs.close();
@@ -196,7 +237,7 @@ public class DatabaseConnectionHandler {
     public OrderModel[] showOrders() {
         ArrayList<OrderModel> models = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM ORDERS";
+            String sql = "SELECT * FROM reservation";
             Statement statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {

@@ -15,7 +15,7 @@ public class ShowTheatreUI extends JFrame {
     }
 
     public void showFrame() {
-        String[][] tableContent = new String[models.length][4];
+        String[][] tableContent = new String[models.length][5];
         for (int i = 0; i < models.length; i++) {
             tableContent[i][0] = models[i].getTheatre().strip();
             tableContent[i][1] = models[i].getStarTime().strip();

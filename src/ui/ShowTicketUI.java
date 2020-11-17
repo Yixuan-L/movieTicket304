@@ -16,14 +16,14 @@ public class ShowTicketUI extends JFrame {
     }
 
     public void showFrame() {
-        String[][] tableContent = new String[models.length][4];
+        String[][] tableContent = new String[models.length][5];
         for (int i = 0; i < models.length; i++) {
             tableContent[i][0] = models[i].getNumber().strip();
             tableContent[i][1] = models[i].getConfirm().strip();
             tableContent[i][2] = models[i].getSeatid().strip();
             tableContent[i][3] = models[i].getHallid().strip();
             tableContent[i][4] = models[i].getStartTime().strip();
-            tableContent[i][5] = models[i].getName().strip();
+//            tableContent[i][5] = models[i].getName().strip();
         }
         String[] names = {
                 "TicketNumber",
@@ -31,7 +31,7 @@ public class ShowTicketUI extends JFrame {
                 "Seat",
                 "Hall",
                 "MovieStartTime",
-                "MovieName"
+//                "MovieName"
         };
         JTable table = new JTable(tableContent, names);
 
