@@ -46,7 +46,7 @@ public class OperationUI extends JFrame{
         c.insets = new Insets(0, 0, 10, 0);
         gb.setConstraints(addMovie, c);
         contentPane.add(addMovie);
-        addMovie.addActionListener(e -> this.delegate.addMovie(1,"2013","Englsih","2D","Disaster", "G",60));
+        addMovie.addActionListener(e -> this.delegate.addMovie("2013","Englsih","2D","Disaster", "G"));
 
 
         // place the hall button

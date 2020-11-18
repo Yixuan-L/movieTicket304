@@ -183,8 +183,8 @@ public class FeaturesUI extends JFrame {
             new OperationUI().showFrame(new OperationDelegate() {
 
                 @Override
-                public boolean addMovie(int movie_id, String movie_anme, String language, String format, String movie_genre, String firm_rating, int active_date) {
-                    return dbHandler.addMovie(movie_id, movie_anme, language, format, movie_genre, firm_rating, active_date);
+                public boolean addMovie(  String movie_name, String language, String format, String movie_genre, String firm_rating) {
+                    return dbHandler.addMovie( movie_name, language, format, movie_genre, firm_rating);
                 }
 
                 @Override
