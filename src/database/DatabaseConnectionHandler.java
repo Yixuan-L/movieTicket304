@@ -9,7 +9,7 @@ public class DatabaseConnectionHandler {
     //    private static final String ORACLE_URL = "jdbc:oracle:thin:@localhost:1522:stu";
     private static final String ORACLE_URL = "jdbc:mysql://localhost:3306/304movie?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
     private static final String ORACLE_USERNAME = "root";
-    private static final String ORACLE_PASSWORD = "houzi25252525";
+    private static final String ORACLE_PASSWORD = "esther417";
 
     private static final String EXCEPTION_TAG = "[EXCEPTION]";
     private static final String WARNING_TAG = "[WARNING]";
@@ -138,6 +138,8 @@ public class DatabaseConnectionHandler {
             rollbackConnection();
         }
     }
+
+
 
     public HallModel[] showHalls() {
         ArrayList<HallModel> models = new ArrayList<>();
@@ -529,7 +531,7 @@ public class DatabaseConnectionHandler {
     }
 
 
-    public boolean addMovie( String movie_name, String language, String format, String movie_genre, String firm_rating) {
+    public boolean addMovie( String movie_name, String language, String format, String movie_genre, String firm_rating, double movie_price) {
         try {
 
             PreparedStatement ps = connection.prepareStatement("insert into movie( movie_name, language, format, movie_genre, firm_rating)values(?,?,?,?,?)");
@@ -541,9 +543,15 @@ public class DatabaseConnectionHandler {
 
             int rowCount = ps.executeUpdate();
 
+            ps = connection.prepareStatement("insert into moviePrice (movie_price)values(?)");
+            ps.setDouble(1, movie_price);
+            int rowCount2 = ps.executeUpdate();
             System.out.println("YAY");
+
             connection.commit();
             ps.close();
+
+
             return true;
 
         } catch (SQLException e) {

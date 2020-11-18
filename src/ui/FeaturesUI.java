@@ -127,6 +127,8 @@ public class FeaturesUI extends JFrame {
 
                 }
 
+
+
                 @Override
                 public void updateCustomer(int id, String[] updateInfo) {
 
@@ -183,8 +185,8 @@ public class FeaturesUI extends JFrame {
             new OperationUI().showFrame(new OperationDelegate() {
 
                 @Override
-                public boolean addMovie(  String movie_name, String language, String format, String movie_genre, String firm_rating) {
-                    return dbHandler.addMovie( movie_name, language, format, movie_genre, firm_rating);
+                public boolean addMovie(  String movie_name, String language, String format, String movie_genre, String firm_rating, double movie_price) {
+                    return dbHandler.addMovie( movie_name, language, format, movie_genre, firm_rating, movie_price);
                 }
 
                 @Override
@@ -240,6 +242,7 @@ public class FeaturesUI extends JFrame {
                     ShowOrderUI ui = new ShowOrderUI((models));
                     ui.showFrame();
                 }
+
 
                 @Override
                 public void updateCustomer(int id, String[] updateInfo) {

@@ -14,6 +14,7 @@ public interface DatabaseDelegate {
     void showTickets();
     void showSeats();
     void showOrders();
+
     void updateCustomer(int id , String[] updateInfo);
     int makePaymentCash(int amount);
     int makePaymentCard(int amount, String cardnumber, String cvv);
