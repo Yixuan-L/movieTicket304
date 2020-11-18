@@ -330,12 +330,13 @@ public class DatabaseConnectionHandler extends JFrame {
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
+        System.out.println(id);
         return id;
     }
 
 
 
-    public boolean createReservation ( String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id ) {
+    public boolean createReservation ( String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id , String seat_id, String hall_id, String movie_start_time) {
         try {
 
 
@@ -345,6 +346,7 @@ public class DatabaseConnectionHandler extends JFrame {
             Statement statement = connection.createStatement();
             ResultSet res = statement.executeQuery(sql);
             int movie_id = 0;
+            int reservation_id = 0;
             if (res.next()) {
                 movie_id = res.getInt(1);
             }
@@ -356,6 +358,7 @@ public class DatabaseConnectionHandler extends JFrame {
             int customer_id = 0;
             if (res.next()) {
                 customer_id= res.getInt(1);
+                System.out.println(customer_id);
             }
 
             Timestamp orderTime = new Timestamp(System.currentTimeMillis());
@@ -368,8 +371,30 @@ public class DatabaseConnectionHandler extends JFrame {
             ps.setInt(5, customer_id );
             //int rowCount = 0;
             int rowCount = ps.executeUpdate();
+
+
+            sql = "select * from reservation where confirmation_number = (select MAX(confirmation_number) from reservation)";
+            statement = connection.createStatement();
+            res = statement.executeQuery(sql);
+
+
+            if (res.next()) {
+                reservation_id = res.getInt(1);
+                System.out.println("reservation id is " + reservation_id);
+            }
+
+
+            ps = connection.prepareStatement("insert into ticket( confirmation_number, seat_id, hall_id, movie_start_time)values(?,?,?,?)");
+            ps.setInt(1, reservation_id);
+            ps.setString(2, seat_id);
+            ps.setString(3, hall_id );
+            ps.setTimestamp(4, Timestamp.valueOf(movie_start_time) );
+            //int rowCount = 0;
+            rowCount = ps.executeUpdate();
+
             connection.commit();
             ps.close();
+
 
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());

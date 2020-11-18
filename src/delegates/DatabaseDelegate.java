@@ -4,8 +4,10 @@ import model.BranchRevenueModel;
 import model.BranchTicketModel;
 import model.CustomerModel;
 import model.FormatPrice;
+import oracle.sql.TIMESTAMP;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 public interface DatabaseDelegate {
 
@@ -23,7 +25,7 @@ public interface DatabaseDelegate {
     void updateCustomer(int id , String[] updateInfo);
     int makePaymentCash(int amount);
     int makePaymentCard(int amount, String cardnumber, String cvv);
-    boolean createReservation ( String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id );
+    boolean createReservation (String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id, String seat_id, String hall_id,  String movie_start_time );
 
     BranchRevenueModel[] branchRevenue();
     BranchTicketModel[] branchTicket();
