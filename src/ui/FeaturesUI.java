@@ -12,7 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
+import java.sql.SQLException;
 
 
 public class FeaturesUI extends JFrame {
@@ -169,6 +169,11 @@ public class FeaturesUI extends JFrame {
                 }
 
                 @Override
+                public void showMovie() {
+
+                }
+
+                @Override
                 public boolean deleteMovie(String moviename) {
                     return false;
                 }
@@ -240,7 +245,11 @@ public class FeaturesUI extends JFrame {
                     ShowOrderUI ui = new ShowOrderUI((models));
                     ui.showFrame();
                 }
+                @Override
+                public void showMovie() throws SQLException {
+                    dbHandler.showMovie();
 
+                }
                 @Override
                 public void updateCustomer(int id, String[] updateInfo) {
                     dbHandler.updateCustomer(id, updateInfo);

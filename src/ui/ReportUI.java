@@ -81,6 +81,11 @@ public class ReportUI extends JFrame implements DatabaseDelegate {
     }
 
     @Override
+    public void showMovie() {
+
+    }
+
+    @Override
     public void showHalls() {
 
     }

@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class DatabaseUI extends JFrame implements DatabaseDelegate {
 
@@ -174,6 +175,20 @@ public class DatabaseUI extends JFrame implements DatabaseDelegate {
         contentPane.add(CustomerAllMovieButton);
         CustomerAllMovieButton.addActionListener(e -> this.delegate.customerAllMovie());
 
+
+        //button test for customer buy all movies
+        JButton showMovieButton = new JButton("Show movie table join moviePrice table");
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0, 0, 10, 0);
+        gb.setConstraints(showMovieButton, c);
+        contentPane.add(showMovieButton);
+        showMovieButton.addActionListener(e -> {
+            try {
+                this.delegate.showMovie();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
 
 
 
@@ -392,6 +407,11 @@ public class DatabaseUI extends JFrame implements DatabaseDelegate {
 
             @Override
             public void customerAllMovie() {
+
+            }
+
+            @Override
+            public void showMovie() {
 
             }
 

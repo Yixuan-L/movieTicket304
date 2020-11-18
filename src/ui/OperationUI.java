@@ -54,7 +54,7 @@ public class OperationUI extends JFrame{
         c.insets = new Insets(0, 0, 10, 0);
         gb.setConstraints(deleteMovie, c);
         contentPane.add(deleteMovie);
-        deleteMovie.addActionListener(e -> this.delegate.deleteMovie("Alone"));
+        deleteMovie.addActionListener(e -> this.delegate.deleteMovie("2012"));
 
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {

@@ -1,11 +1,16 @@
 package database;
 
 import model.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 import com.mysql.jdbc.Driver;
 
-public class DatabaseConnectionHandler {
+import javax.swing.*;
+
+public class DatabaseConnectionHandler extends JFrame {
     //    private static final String ORACLE_URL = "jdbc:oracle:thin:@localhost:1522:stu";
     private static final String ORACLE_URL = "jdbc:mysql://localhost:3306/304movie?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
     private static final String ORACLE_USERNAME = "root";
@@ -509,7 +514,69 @@ public class DatabaseConnectionHandler {
     }
 
 
+   public void showMovie() throws SQLException {
+       String sql = "SELECT movie.movie_id,movie.movie_name,movie.language,movie.format,movie.movie_genre,movie.firm_rating, moviePrice.movie_price FROM movie, moviePrice where movie.movie_id = moviePrice.movie_id";
+       Statement statement = connection.createStatement();
+       ResultSet rs = statement.executeQuery(sql);
+       String[][] tableContent = new String[50][7];
+       int i = 0;
+       while (rs.next()) {
+           tableContent[i][0] = rs.getString(1);
+           tableContent[i][1] = rs.getString(2);
+           tableContent[i][2] = rs.getString(3);
+           tableContent[i][3] = rs.getString(4);
+           tableContent[i][4] =  rs.getString(5);
+           tableContent[i][5] =  rs.getString(6);
+           tableContent[i][6] =  rs.getString(7);
+                   i++;
+       }
+       rs.close();
+       statement.close();
 
+       String[] names = {
+               "MovieID",
+               "MovieName",
+               "Language",
+               "Format",
+               "General",
+               "Rating",
+               "Price"
+       };
+
+       JTable table = new JTable(tableContent, names);
+       JScrollPane scrollPane = new JScrollPane(table) {
+           @Override
+           public Dimension getPreferredSize() {
+               return new Dimension(1200, 600);
+           }
+       };
+       JPanel contentPane = new JPanel();
+       this.setContentPane(contentPane);
+
+       // layout components using the GridBag layout manager
+       GridBagLayout gb = new GridBagLayout();
+       GridBagConstraints c = new GridBagConstraints();
+
+       contentPane.setLayout(gb);
+       contentPane.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+
+       // place the pane
+       c.gridwidth = GridBagConstraints.REMAINDER;
+       c.insets = new Insets(0, 0, 0, 0);
+       gb.setConstraints(scrollPane, c);
+       contentPane.add(scrollPane);
+
+       // size the window to obtain a best fit for the components
+       this.pack();
+
+       // center the frame
+       Dimension d = this.getToolkit().getScreenSize();
+       Rectangle r = this.getBounds();
+       this.setLocation((d.width - r.width) / 2, (d.height - r.height) / 2);
+
+       // make the window visible
+       this.setVisible(true);
+   }
 
 
     public boolean deleteMovie(String moviename) {
