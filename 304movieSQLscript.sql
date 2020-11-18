@@ -52,11 +52,11 @@ insert into movie(movie_name, language, format, movie_genre, firm_rating) values
 
 
 create table moviePrice(
-  movie_id int primary key,
+  movie_id int auto_increment primary key,
   movie_price double,
   foreign key(movie_id) references movie(movie_id) on delete cascade on update cascade
 );
-insert into moviePrice(movie_id, movie_price) values (1, 35.0), (2, 40.0), (3, 30.0), (4, 30.0), (5, 35.0);
+insert into moviePrice( movie_price) values (35.0), (40.0), (30.0), (30.0), (35.0), (45.0) ;
 -- delete from movie where movie_id=4;
 
 

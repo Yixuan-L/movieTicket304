@@ -2,25 +2,25 @@ package model;
 
 public class MovieModel {
     private int movieid;
-    private String dType;
+    private String format;
     private double price;
     private String name;
     private String language;
     private String genre;
-    private String duration;
-    private String rating;
-    private int activeDate;
 
-    public MovieModel(int movieid, String dType, double price, String name, String language, String genre, String duration, String rating, int activeDate) {
+    private String rating;
+
+
+    public MovieModel(int movieid, String name, String language,String format,  String genre, String rating,double price ) {
         this.movieid = movieid;
-        this.dType = dType;
+        this.format = format;
         this.price = price;
         this.name = name;
         this.language = language;
         this.genre = genre;
-        this.duration = duration;
+
         this.rating = rating;
-        this.activeDate = activeDate;
+
     }
 
     public int getMovieid() {
@@ -31,21 +31,16 @@ public class MovieModel {
         return price;
     }
 
-    public String getdType() {
-        return dType;
+    public String getFormat() {
+        return format;
     }
 
     public String getName() {
         return name;
     }
 
-    public int getActiveDate() {
-        return activeDate;
-    }
 
-    public String getDuration() {
-        return duration;
-    }
+
 
     public String getGenre() {
         return genre;

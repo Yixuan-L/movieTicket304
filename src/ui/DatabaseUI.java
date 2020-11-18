@@ -32,6 +32,7 @@ public class DatabaseUI extends JFrame implements DatabaseDelegate {
         JButton seatButton = new JButton("seat");
         JButton orderButton = new JButton("order");
         JButton ticketButton = new JButton("ticket");
+        JButton movieButton = new JButton("Movie");
 
 
         JButton customerButton = new JButton("Customers");
@@ -370,7 +371,9 @@ public class DatabaseUI extends JFrame implements DatabaseDelegate {
 
             }
 
-            @Override
+
+
+    @Override
             public void updateCustomer(int id, String[] updateInfo) {
 
             }

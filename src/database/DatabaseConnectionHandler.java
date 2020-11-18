@@ -144,6 +144,8 @@ public class DatabaseConnectionHandler extends JFrame {
         }
     }
 
+
+
     public HallModel[] showHalls() {
         ArrayList<HallModel> models = new ArrayList<>();
         try {
@@ -596,7 +598,7 @@ public class DatabaseConnectionHandler extends JFrame {
     }
 
 
-    public boolean addMovie( String movie_name, String language, String format, String movie_genre, String firm_rating) {
+    public boolean addMovie( String movie_name, String language, String format, String movie_genre, String firm_rating, double movie_price) {
         try {
 
             PreparedStatement ps = connection.prepareStatement("insert into movie( movie_name, language, format, movie_genre, firm_rating)values(?,?,?,?,?)");
@@ -608,9 +610,15 @@ public class DatabaseConnectionHandler extends JFrame {
 
             int rowCount = ps.executeUpdate();
 
+            ps = connection.prepareStatement("insert into moviePrice (movie_price)values(?)");
+            ps.setDouble(1, movie_price);
+            int rowCount2 = ps.executeUpdate();
             System.out.println("YAY");
+
             connection.commit();
             ps.close();
+
+
             return true;
 
         } catch (SQLException e) {

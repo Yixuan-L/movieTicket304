@@ -110,6 +110,8 @@ public class ReportUI extends JFrame implements DatabaseDelegate {
 
     }
 
+
+
     @Override
     public void updateCustomer(int id, String[] updateInfo) {
 
