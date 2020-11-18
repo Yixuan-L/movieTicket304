@@ -177,7 +177,7 @@ public class DatabaseUI extends JFrame implements DatabaseDelegate {
         CustomerAllMovieButton.addActionListener(e -> this.delegate.customerAllMovie());
 
 
-        //button test for customer buy all movies
+        //button test for show movies
         JButton showMovieButton = new JButton("Show movie table join moviePrice table");
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.insets = new Insets(0, 0, 10, 0);
@@ -186,6 +186,34 @@ public class DatabaseUI extends JFrame implements DatabaseDelegate {
         showMovieButton.addActionListener(e -> {
             try {
                 this.delegate.showMovie();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
+
+        //button test for show cash
+        JButton showCashButton = new JButton("Cash");
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0, 0, 10, 0);
+        gb.setConstraints(showCashButton, c);
+        contentPane.add(showCashButton);
+        showCashButton.addActionListener(e -> {
+            try {
+                this.delegate.showCash();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
+
+        //button test for show card
+        JButton showCardButton = new JButton("Card");
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0, 0, 10, 0);
+        gb.setConstraints(showCardButton, c);
+        contentPane.add(showCardButton);
+        showCardButton.addActionListener(e -> {
+            try {
+                this.delegate.showCard();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
@@ -415,6 +443,15 @@ public class DatabaseUI extends JFrame implements DatabaseDelegate {
 
             @Override
             public void showMovie() {
+
+            }
+            @Override
+            public void showCash() {
+
+            }
+
+            @Override
+            public void showCard() {
 
             }
 

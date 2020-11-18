@@ -16,7 +16,9 @@ public interface DatabaseDelegate {
     void showTickets();
     void showSeats();
     void showOrders();
+    void  showCard() throws SQLException;
     void  showMovie() throws SQLException;
+    void showCash() throws SQLException;
 
     void updateCustomer(int id , String[] updateInfo);
     int makePaymentCash(int amount);

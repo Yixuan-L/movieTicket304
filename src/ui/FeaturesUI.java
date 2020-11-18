@@ -174,6 +174,15 @@ public class FeaturesUI extends JFrame {
                 public void showMovie() {
 
                 }
+                @Override
+                public void showCash() {
+
+                }
+
+                @Override
+                public void showCard() {
+
+                }
 
                 @Override
                 public boolean deleteMovie(String moviename) {
@@ -250,6 +259,16 @@ public class FeaturesUI extends JFrame {
                 @Override
                 public void showMovie() throws SQLException {
                     dbHandler.showMovie();
+                }
+
+                @Override
+                public void showCash() throws SQLException {
+                    dbHandler.showCash();
+                }
+
+                @Override
+                public void showCard() throws SQLException {
+                    dbHandler.showCard ();
                 }
 
                 @Override
