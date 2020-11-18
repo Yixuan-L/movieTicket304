@@ -1,19 +1,26 @@
 package ui;
 
+import database.DatabaseConnectionHandler;
 import delegates.DatabaseDelegate;
 import delegates.FeaturesDelegate;
+import delegates.OperationDelegate;
+import model.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class DatabaseUI extends JFrame {
+public class DatabaseUI extends JFrame implements DatabaseDelegate {
 
     private DatabaseDelegate delegate;
 
+//    private DatabaseConnectionHandler dbHandler;
+
     public DatabaseUI() {
         super("Database");
+//        dbHandler = new DatabaseConnectionHandler();
+//        dbHandler.connectToOracle();
     }
 
     public void showFrame(DatabaseDelegate delegate) {
@@ -173,6 +180,7 @@ public class DatabaseUI extends JFrame {
         //跳转到功能页面
         featuresButton.addActionListener(e -> {
             close();
+
             new FeaturesUI().showFrame(new FeaturesDelegate() {
                 @Override
                 public void search() {
@@ -222,4 +230,180 @@ public class DatabaseUI extends JFrame {
     public void close() {
         this.dispose();
     }
+
+//    @Override
+//    public void showCustomers() {
+//        CustomerModel[] models = dbHandler.showCustomers();
+//        ShowCustomersUI ui = new ShowCustomersUI((models));
+//        ui.showFrame();
+//    }
+//
+//    @Override
+//    public void showHalls() {
+//        HallModel[] models = dbHandler.showHalls();
+//        ShowHallUI ui = new ShowHallUI((models));
+//        ui.showFrame();
+//    }
+//
+//    @Override
+//    public void showTheaters() {
+//        TheatreModel[] models = dbHandler.showTheaters();
+//        ShowTheatreUI ui = new ShowTheatreUI((models));
+//        ui.showFrame();
+//    }
+//
+//    @Override
+//    public void showTickets() {
+//        TicketModel[] models = dbHandler.showTickets();
+//        ShowTicketUI ui = new ShowTicketUI((models));
+//        ui.showFrame();
+//    }
+//
+//    @Override
+//    public void showSeats() {
+//        SeatModel[] models = dbHandler.showSeats();
+//        ShowSeatUI ui = new ShowSeatUI((models));
+//        ui.showFrame();
+//    }
+//
+//    @Override
+//    public void showOrders() {
+//        OrderModel[] models = dbHandler.showOrders();
+//        ShowOrderUI ui = new ShowOrderUI((models));
+//        ui.showFrame();
+//    }
+//
+//    @Override
+//    public void updateCustomer(int id, String[] updateInfo) {
+//        dbHandler.updateCustomer(id, updateInfo);
+//    }
+//
+//    @Override
+//    public int makePaymentCash(int amount) {
+//        return dbHandler.makePaymentCash(amount);
+//    }
+//
+//    @Override
+//    public int makePaymentCard(int amount, String cardnumber, String cvv) {
+//        return dbHandler.makePaymentCard(amount, cardnumber, cvv);
+//    }
+//
+//    @Override
+//    public boolean createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id) {
+//        return dbHandler.createReservation (  branch_name,  movie_name, movie_language, movie_format, customer_name , payment_id);
+//    }
+//
+//    @Override
+//    public BranchRevenueModel[] branchRevenue() {
+//        return dbHandler.branchRevenue();
+//    }
+//
+//    @Override
+//    public BranchTicketModel[] branchTicket() {
+//        return dbHandler.branchticket();
+//    }
+//
+//    @Override
+//    public FormatPrice[] formatPrice() {
+//        return dbHandler.formatPrice();
+//    }
+//
+//    @Override
+//    public void customerAllMovie() {
+//        CustomerModel[] models = dbHandler.customerAllMovie();
+//        CustomersAllMovieUI ui = new CustomersAllMovieUI((models));
+//        ui.showFrame();
+//    }
+//
+//    @Override
+//    public boolean deleteMovie(String moviename) {
+//        return dbHandler.deleteMovie(moviename);
+//    }
+
+
+//
+//    public static void main(String[] args) {
+//        DatabaseUI databaseUI = new DatabaseUI();
+//        databaseUI.showFrame(new DatabaseDelegate() {
+            @Override
+            public void showCustomers() {
+
+            }
+
+            @Override
+            public void showHalls() {
+
+            }
+
+            @Override
+            public void showTheaters() {
+
+            }
+
+            @Override
+            public void showTickets() {
+
+            }
+
+            @Override
+            public void showSeats() {
+
+            }
+
+            @Override
+            public void showOrders() {
+
+            }
+
+            @Override
+            public void updateCustomer(int id, String[] updateInfo) {
+
+            }
+
+            @Override
+            public int makePaymentCash(int amount) {
+                return 0;
+            }
+
+            @Override
+            public int makePaymentCard(int amount, String cardnumber, String cvv) {
+                return 0;
+            }
+
+            @Override
+            public boolean createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id) {
+                return false;
+            }
+
+            @Override
+            public BranchRevenueModel[] branchRevenue() {
+                return new BranchRevenueModel[0];
+            }
+
+            @Override
+            public BranchTicketModel[] branchTicket() {
+                return new BranchTicketModel[0];
+            }
+
+            @Override
+            public FormatPrice[] formatPrice() {
+                return new FormatPrice[0];
+            }
+
+            @Override
+            public void customerAllMovie() {
+
+            }
+
+            @Override
+            public boolean deleteMovie(String moviename) {
+                return false;
+            }
+
+//    @Override
+//    public boolean addMovie(int movie_id, String movie_name, String language, String format, String movie_genre, String firm_rating, int active_date) {
+//        return false;
+//    }
+//        });
+//    }
 }

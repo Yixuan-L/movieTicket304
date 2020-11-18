@@ -1,17 +1,28 @@
 package ui;
 
+import database.DatabaseConnectionHandler;
+import delegates.DatabaseDelegate;
 import delegates.FeaturesDelegate;
-
+import delegates.OperationDelegate;
+import model.BranchRevenueModel;
+import model.BranchTicketModel;
+import model.FormatPrice;
+import model.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+
+
 public class FeaturesUI extends JFrame {
     private FeaturesDelegate delegate;
 
+    private DatabaseConnectionHandler dbHandler;
+
+
     public FeaturesUI() {
-        super("Features");
+        super("Movie DMBS");
     }
 
     public void showFrame(FeaturesDelegate delegate) {
@@ -22,14 +33,12 @@ public class FeaturesUI extends JFrame {
 
         JButton searchButton = new JButton("Search Movie");
         JButton reserveButton = new JButton("Reserve Movie");
+        JButton accountButton = new JButton("Account Info");
 
-        JButton changeAnOrder = new JButton("Change Order");
-        JButton searchOrder = new JButton("Search Order");
+        JButton operation = new JButton("Theatre Operation");
+        JButton database = new JButton("Database");
         JButton report = new JButton("Report");
-//
-//        JButton returnButton = new JButton("Return a Vehicle");
-//        JButton returnReportButton = new JButton("Daily Return Report");
-//        JButton branchReturnReportButton = new JButton("Daily Return Report for Branch");
+
 
         JPanel contentPane = new JPanel();
         this.setContentPane(contentPane);
@@ -59,6 +68,12 @@ public class FeaturesUI extends JFrame {
         gb.setConstraints(reserveButton, c);
         contentPane.add(reserveButton);
 
+        // customer account button
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0, 0, 0, 0);
+        gb.setConstraints(accountButton, c);
+        contentPane.add(accountButton);
+
         // place the clerk label
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.insets = new Insets(30, 0, 10, 0);
@@ -68,20 +83,229 @@ public class FeaturesUI extends JFrame {
         // place the rent button
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.insets = new Insets(0, 0, 0, 0);
-        gb.setConstraints(changeAnOrder, c);
-        contentPane.add(changeAnOrder);
-
-        // place the rental report button
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.insets = new Insets(0, 0, 0, 0);
-        gb.setConstraints(searchOrder, c);
-        contentPane.add(searchOrder);
+        gb.setConstraints(operation, c);
+        contentPane.add(operation);
 
         // place the branch rental report button
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.insets = new Insets(0, 0, 20, 0);
         gb.setConstraints(report, c);
         contentPane.add(report);
+
+        report.addActionListener(e -> {
+            this.dispose();
+            dbHandler = new DatabaseConnectionHandler();
+            dbHandler.connectToOracle();
+            new ReportUI().showFrame(new DatabaseDelegate() {
+                @Override
+                public void showCustomers() {
+
+                }
+
+                @Override
+                public void showHalls() {
+
+                }
+
+                @Override
+                public void showTheaters() {
+
+                }
+
+                @Override
+                public void showTickets() {
+
+                }
+
+                @Override
+                public void showSeats() {
+
+                }
+
+                @Override
+                public void showOrders() {
+
+                }
+
+                @Override
+                public void updateCustomer(int id, String[] updateInfo) {
+
+                }
+
+                @Override
+                public int makePaymentCash(int amount) {
+                    return 0;
+                }
+
+                @Override
+                public int makePaymentCard(int amount, String cardnumber, String cvv) {
+                    return 0;
+                }
+
+                @Override
+                public boolean createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id) {
+                    return false;
+                }
+
+                @Override
+                public BranchRevenueModel[] branchRevenue() {
+                    return dbHandler.branchRevenue();
+                }
+
+                @Override
+                public BranchTicketModel[] branchTicket() {
+                    return dbHandler.branchticket();
+                }
+
+
+                @Override
+                public FormatPrice[] formatPrice() {
+                    return new FormatPrice[0];
+                }
+
+                @Override
+                public void customerAllMovie() {
+
+                }
+
+                @Override
+                public boolean deleteMovie(String moviename) {
+                    return false;
+                }
+            });
+        });
+
+
+        operation.addActionListener(e -> {
+            this.dispose();
+            dbHandler = new DatabaseConnectionHandler();
+            dbHandler.connectToOracle();
+            new OperationUI().showFrame(new OperationDelegate() {
+
+                @Override
+                public boolean addMovie(int movie_id, String movie_anme, String language, String format, String movie_genre, String firm_rating, int active_date) {
+                    return dbHandler.addMovie(movie_id, movie_anme, language, format, movie_genre, firm_rating, active_date);
+                }
+
+                @Override
+                public boolean deleteMovie(String moviename) {
+                    return dbHandler.deleteMovie(moviename);
+                }
+            });
+        });
+
+        database.addActionListener(e -> {
+            this.dispose();
+            dbHandler = new DatabaseConnectionHandler();
+            dbHandler.connectToOracle();
+            new DatabaseUI().showFrame(new DatabaseDelegate() {
+                @Override
+                public void showCustomers() {
+                    CustomerModel[] models = dbHandler.showCustomers();
+                    ShowCustomersUI ui = new ShowCustomersUI((models));
+                    ui.showFrame();
+                }
+
+                @Override
+                public void showHalls() {
+                    HallModel[] models = dbHandler.showHalls();
+                    ShowHallUI ui = new ShowHallUI((models));
+                    ui.showFrame();
+                }
+
+                @Override
+                public void showTheaters() {
+                    TheatreModel[] models = dbHandler.showTheaters();
+                    ShowTheatreUI ui = new ShowTheatreUI((models));
+                    ui.showFrame();
+                }
+
+                @Override
+                public void showTickets() {
+                    TicketModel[] models = dbHandler.showTickets();
+                    ShowTicketUI ui = new ShowTicketUI((models));
+                    ui.showFrame();
+                }
+
+                @Override
+                public void showSeats() {
+                    SeatModel[] models = dbHandler.showSeats();
+                    ShowSeatUI ui = new ShowSeatUI((models));
+                    ui.showFrame();
+                }
+
+                @Override
+                public void showOrders() {
+                    OrderModel[] models = dbHandler.showOrders();
+                    ShowOrderUI ui = new ShowOrderUI((models));
+                    ui.showFrame();
+                }
+
+                @Override
+                public void updateCustomer(int id, String[] updateInfo) {
+                    dbHandler.updateCustomer(id, updateInfo);
+                }
+
+                @Override
+                public int makePaymentCash(int amount) {
+                    return dbHandler.makePaymentCash(amount);
+                }
+
+                @Override
+                public int makePaymentCard(int amount, String cardnumber, String cvv) {
+                    return dbHandler.makePaymentCard(amount, cardnumber, cvv);
+                }
+
+                @Override
+                public boolean createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id) {
+                    return dbHandler.createReservation (  branch_name,  movie_name, movie_language, movie_format, customer_name , payment_id);
+                }
+
+                @Override
+                public BranchRevenueModel[] branchRevenue() {
+                    return dbHandler.branchRevenue();
+                }
+
+                @Override
+                public BranchTicketModel[] branchTicket() {
+                    return dbHandler.branchticket();
+                }
+
+                @Override
+                public FormatPrice[] formatPrice() {
+                    return dbHandler.formatPrice();
+                }
+
+                @Override
+                public void customerAllMovie() {
+                    CustomerModel[] models = dbHandler.customerAllMovie();
+                    CustomersAllMovieUI ui = new CustomersAllMovieUI((models));
+                    ui.showFrame();
+                }
+
+                @Override
+                public boolean deleteMovie(String moviename) {
+                    return false;
+                }
+
+//                @Override
+//                public boolean deleteMovie(String moviename) {
+//                    return dbHandler.deleteMovie(moviename);
+//                }
+
+//                @Override
+//                public boolean addMovie(int movie_id, String movie_anme, String language, String format, String movie_genre, String firm_rating, int active_date) {
+//                    return false;
+//                }
+
+            });
+        });
+
+        // place the rental report button
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0, 0, 0, 0);
+        gb.setConstraints(database, c);
+        contentPane.add(database);
 //
 //        // place the return button
 //        c.gridwidth = GridBagConstraints.REMAINDER;
@@ -104,8 +328,8 @@ public class FeaturesUI extends JFrame {
         // register customer button with action event handler
         searchButton.addActionListener(e -> this.delegate.search());
         reserveButton.addActionListener(e -> this.delegate.reserve());
-//        changeAnOrder.addActionListener(e -> this.delegate.rent());
-//        searchOrder.addActionListener(e -> this.delegate.rentalReport());
+//        operation.addActionListener(e -> this.delegate.rent());
+//        database.addActionListener(e -> this.delegate.rentalReport());
 //        report.addActionListener(e -> this.delegate.branchRentalReport());
 //        returnButton.addActionListener(e -> this.delegate.returnBack());
 //        returnReportButton.addActionListener(e -> this.delegate.returnReport());
@@ -130,68 +354,68 @@ public class FeaturesUI extends JFrame {
         this.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        FeaturesUI optionsUI = new FeaturesUI();
-        optionsUI.showFrame(new FeaturesDelegate() {
-            @Override
-            public void search() {
-
-            }
-
-            @Override
-            public void reserve() {
-
-            }
-
-            @Override
-            public void ticketConversion() {
-
-            }
-
-            @Override
-            public void saleReport() {
-
-            }
-
-            @Override
-            public void movieReport() {
-
-            }
-
-            @Override
-            public void branchSalesReport() {
-
-            }
-//
+//    public static void main(String[] args) {
+//        FeaturesUI optionsUI = new FeaturesUI();
+//        optionsUI.showFrame(new FeaturesDelegate() {
 //            @Override
-//            public void rent() {
+//            public void search() {
 //
 //            }
 //
 //            @Override
-//            public void rentalReport() {
+//            public void reserve() {
 //
 //            }
 //
 //            @Override
-//            public void branchRentalReport() {
+//            public void ticketConversion() {
 //
 //            }
 //
 //            @Override
-//            public void returnBack() {
+//            public void saleReport() {
 //
 //            }
 //
 //            @Override
-//            public void returnReport() {
+//            public void movieReport() {
 //
 //            }
 //
 //            @Override
-//            public void branchReturnReport() {
+//            public void branchSalesReport() {
 //
 //            }
-        });
-    }
+////
+////            @Override
+////            public void rent() {
+////
+////            }
+////
+////            @Override
+////            public void rentalReport() {
+////
+////            }
+////
+////            @Override
+////            public void branchRentalReport() {
+////
+////            }
+////
+////            @Override
+////            public void returnBack() {
+////
+////            }
+////
+////            @Override
+////            public void returnReport() {
+////
+////            }
+////
+////            @Override
+////            public void branchReturnReport() {
+////
+////            }
+//        });
+//    }
 }

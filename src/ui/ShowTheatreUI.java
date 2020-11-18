@@ -17,19 +17,19 @@ public class ShowTheatreUI extends JFrame {
     public void showFrame() {
         String[][] tableContent = new String[models.length][5];
         for (int i = 0; i < models.length; i++) {
-            tableContent[i][0] = models[i].getTheatre().strip();
-            tableContent[i][1] = models[i].getStarTime().strip();
-            tableContent[i][2] = models[i].getEndTime().strip();
+            tableContent[i][0] = models[i].getBranch_name().strip();
+            tableContent[i][1] = models[i].getOpen_time().strip();
+            tableContent[i][2] = models[i].getClose_time().strip();
             tableContent[i][3] = models[i].getCity().strip();
             tableContent[i][4] = models[i].getLocation().strip();
 
         }
         String[] names = {
-                "TheatreName",
-                "StartTime",
-                "EndTime",
-                "City",
-                "Location"
+                "branch_name",
+                "open_time",
+                "close_time",
+                "city",
+                "location"
 
         };
         JTable table = new JTable(tableContent, names);

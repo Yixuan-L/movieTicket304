@@ -9,7 +9,7 @@ public class DatabaseConnectionHandler {
     //    private static final String ORACLE_URL = "jdbc:oracle:thin:@localhost:1522:stu";
     private static final String ORACLE_URL = "jdbc:mysql://localhost:3306/304movie?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
     private static final String ORACLE_USERNAME = "root";
-    private static final String ORACLE_PASSWORD = "esther417";
+    private static final String ORACLE_PASSWORD = "password";
 
     private static final String EXCEPTION_TAG = "[EXCEPTION]";
     private static final String WARNING_TAG = "[WARNING]";
@@ -520,6 +520,7 @@ public class DatabaseConnectionHandler {
             int rowCount = ps.executeUpdate();
             connection.commit();
             ps.close();
+            return true;
 
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
@@ -528,6 +529,30 @@ public class DatabaseConnectionHandler {
     }
 
 
+    public boolean addMovie(int movie_id, String movie_name, String language, String format, String movie_genre, String firm_rating, int active_date) {
+        try {
+
+            PreparedStatement ps = connection.prepareStatement("insert into movie(movie_id, movie_name, language, format, movie_genre, firm_rating, active_date)values(?,?,?,?,?,?,?)");
+            ps.setInt(1, movie_id);
+            ps.setString(2, movie_name);
+            ps.setString(3, language);
+            ps.setString(4, format);
+            ps.setString(5, movie_genre );
+            ps.setString(6, firm_rating);
+            ps.setInt(7, active_date);
+//            int rowCount = ps.executeUpdate();
+
+            System.out.println("YAY");
+            connection.commit();
+            ps.close();
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        System.out.println("NOPE");
+        return false;
 
 
+    }
 }

@@ -67,6 +67,11 @@ public class SearchUI extends JFrame {
         gb.setConstraints(locationField, c);
         contentPane.add(locationField);
 
+        c.gridwidth = GridBagConstraints.CENTER;
+        c.insets = new Insets(0, 0, 0, 10);
+        gb.setConstraints(dateLabel, c);
+        contentPane.add(dateLabel);
+
         // place the from date field
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.insets = new Insets(0, 0, 0, 0);

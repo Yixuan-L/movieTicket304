@@ -26,4 +26,7 @@ public interface DatabaseDelegate {
 
     boolean deleteMovie(String moviename);
 
+
+//    boolean addMovie(int movie_id, String movie_name, String language, String format, String movie_genre, String firm_rating, int active_date);
+
 }
