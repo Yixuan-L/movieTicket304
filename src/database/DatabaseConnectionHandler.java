@@ -1,15 +1,20 @@
 package database;
 
 import model.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
 import com.mysql.jdbc.Driver;
 
-public class DatabaseConnectionHandler {
+import javax.swing.*;
+
+public class DatabaseConnectionHandler extends JFrame {
     //    private static final String ORACLE_URL = "jdbc:oracle:thin:@localhost:1522:stu";
     private static final String ORACLE_URL = "jdbc:mysql://localhost:3306/304movie?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
     private static final String ORACLE_USERNAME = "root";
-    private static final String ORACLE_PASSWORD = "password";
+    private static final String ORACLE_PASSWORD = "esther417";
 
     private static final String EXCEPTION_TAG = "[EXCEPTION]";
     private static final String WARNING_TAG = "[WARNING]";
@@ -138,6 +143,8 @@ public class DatabaseConnectionHandler {
             rollbackConnection();
         }
     }
+
+
 
     public HallModel[] showHalls() {
         ArrayList<HallModel> models = new ArrayList<>();
@@ -323,12 +330,13 @@ public class DatabaseConnectionHandler {
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
+        System.out.println(id);
         return id;
     }
 
 
 
-    public boolean createReservation ( String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id ) {
+    public boolean createReservation ( String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id , String seat_id, String hall_id, String movie_start_time) {
         try {
 
 
@@ -338,6 +346,7 @@ public class DatabaseConnectionHandler {
             Statement statement = connection.createStatement();
             ResultSet res = statement.executeQuery(sql);
             int movie_id = 0;
+            int reservation_id = 0;
             if (res.next()) {
                 movie_id = res.getInt(1);
             }
@@ -349,10 +358,12 @@ public class DatabaseConnectionHandler {
             int customer_id = 0;
             if (res.next()) {
                 customer_id= res.getInt(1);
+                System.out.println(customer_id);
             }
 
             Timestamp orderTime = new Timestamp(System.currentTimeMillis());
             PreparedStatement ps = connection.prepareStatement("insert into reservation(order_time, branch_name, movie_id, payment_id, customer_id)values(?,?,?,?,?)");
+
             ps.setTimestamp(1, orderTime);
             ps.setString(2, branch_name);
             ps.setInt(3, movie_id );
@@ -360,8 +371,30 @@ public class DatabaseConnectionHandler {
             ps.setInt(5, customer_id );
             //int rowCount = 0;
             int rowCount = ps.executeUpdate();
+
+
+            sql = "select * from reservation where confirmation_number = (select MAX(confirmation_number) from reservation)";
+            statement = connection.createStatement();
+            res = statement.executeQuery(sql);
+
+
+            if (res.next()) {
+                reservation_id = res.getInt(1);
+                System.out.println("reservation id is " + reservation_id);
+            }
+
+
+            ps = connection.prepareStatement("insert into ticket( confirmation_number, seat_id, hall_id, movie_start_time)values(?,?,?,?)");
+            ps.setInt(1, reservation_id);
+            ps.setString(2, seat_id);
+            ps.setString(3, hall_id );
+            ps.setTimestamp(4, Timestamp.valueOf(movie_start_time) );
+            //int rowCount = 0;
+            rowCount = ps.executeUpdate();
+
             connection.commit();
             ps.close();
+
 
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
@@ -509,9 +542,184 @@ public class DatabaseConnectionHandler {
     }
 
 
+   public void showMovie() throws SQLException {
+       String sql = "SELECT movie.movie_id,movie.movie_name,movie.language,movie.format,movie.movie_genre,movie.firm_rating, moviePrice.movie_price FROM movie, moviePrice where movie.movie_id = moviePrice.movie_id";
+       Statement statement = connection.createStatement();
+       ResultSet rs = statement.executeQuery(sql);
+       String[][] tableContent = new String[50][7];
+       int i = 0;
+       while (rs.next()) {
+           tableContent[i][0] = rs.getString(1);
+           tableContent[i][1] = rs.getString(2);
+           tableContent[i][2] = rs.getString(3);
+           tableContent[i][3] = rs.getString(4);
+           tableContent[i][4] =  rs.getString(5);
+           tableContent[i][5] =  rs.getString(6);
+           tableContent[i][6] =  rs.getString(7);
+                   i++;
+       }
+       rs.close();
+       statement.close();
+
+       String[] names = {
+               "MovieID",
+               "MovieName",
+               "Language",
+               "Format",
+               "General",
+               "Rating",
+               "Price"
+       };
+
+       JTable table = new JTable(tableContent, names);
+       JScrollPane scrollPane = new JScrollPane(table) {
+           @Override
+           public Dimension getPreferredSize() {
+               return new Dimension(1200, 600);
+           }
+       };
+       JPanel contentPane = new JPanel();
+       this.setContentPane(contentPane);
+
+       // layout components using the GridBag layout manager
+       GridBagLayout gb = new GridBagLayout();
+       GridBagConstraints c = new GridBagConstraints();
+
+       contentPane.setLayout(gb);
+       contentPane.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+
+       // place the pane
+       c.gridwidth = GridBagConstraints.REMAINDER;
+       c.insets = new Insets(0, 0, 0, 0);
+       gb.setConstraints(scrollPane, c);
+       contentPane.add(scrollPane);
+
+       // size the window to obtain a best fit for the components
+       this.pack();
+
+       // center the frame
+       Dimension d = this.getToolkit().getScreenSize();
+       Rectangle r = this.getBounds();
+       this.setLocation((d.width - r.width) / 2, (d.height - r.height) / 2);
+
+       // make the window visible
+       this.setVisible(true);
+   }
 
 
+    public void showCash() throws SQLException {
+        String sql = "SELECT * FROM cash";
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery(sql);
+        String[][] tableContent = new String[50][2];
+        int i = 0;
+        while (rs.next()) {
+            tableContent[i][0] = rs.getString(1);
+            tableContent[i][1] = rs.getString(2);
 
+            i++;
+        }
+        rs.close();
+        statement.close();
+
+        String[] names = {
+                "PaymentID",
+                "PaymentAmount"
+        };
+
+        JTable table = new JTable(tableContent, names);
+        JScrollPane scrollPane = new JScrollPane(table) {
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(1200, 600);
+            }
+        };
+        JPanel contentPane = new JPanel();
+        this.setContentPane(contentPane);
+
+        // layout components using the GridBag layout manager
+        GridBagLayout gb = new GridBagLayout();
+        GridBagConstraints c = new GridBagConstraints();
+
+        contentPane.setLayout(gb);
+        contentPane.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+
+        // place the pane
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0, 0, 0, 0);
+        gb.setConstraints(scrollPane, c);
+        contentPane.add(scrollPane);
+
+        // size the window to obtain a best fit for the components
+        this.pack();
+
+        // center the frame
+        Dimension d = this.getToolkit().getScreenSize();
+        Rectangle r = this.getBounds();
+        this.setLocation((d.width - r.width) / 2, (d.height - r.height) / 2);
+
+        // make the window visible
+        this.setVisible(true);
+    }
+
+    public void showCard() throws SQLException {
+        String sql = "SELECT * FROM card";
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery(sql);
+        String[][] tableContent = new String[50][3];
+        int i = 0;
+        while (rs.next()) {
+            tableContent[i][0] = rs.getString(1);
+            tableContent[i][1] = rs.getString(2);
+            tableContent[i][2] = rs.getString(3);
+
+
+            i++;
+        }
+        rs.close();
+        statement.close();
+
+        String[] names = {
+                "PaymentID",
+                "Card Number",
+                "CVV"
+
+        };
+
+        JTable table = new JTable(tableContent, names);
+        JScrollPane scrollPane = new JScrollPane(table) {
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(1200, 600);
+            }
+        };
+        JPanel contentPane = new JPanel();
+        this.setContentPane(contentPane);
+
+        // layout components using the GridBag layout manager
+        GridBagLayout gb = new GridBagLayout();
+        GridBagConstraints c = new GridBagConstraints();
+
+        contentPane.setLayout(gb);
+        contentPane.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+
+        // place the pane
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0, 0, 0, 0);
+        gb.setConstraints(scrollPane, c);
+        contentPane.add(scrollPane);
+
+        // size the window to obtain a best fit for the components
+        this.pack();
+
+        // center the frame
+        Dimension d = this.getToolkit().getScreenSize();
+        Rectangle r = this.getBounds();
+        this.setLocation((d.width - r.width) / 2, (d.height - r.height) / 2);
+
+        // make the window visible
+        this.setVisible(true);
+    }
     public boolean deleteMovie(String moviename) {
         try {
 
@@ -529,22 +737,27 @@ public class DatabaseConnectionHandler {
     }
 
 
-    public boolean addMovie(int movie_id, String movie_name, String language, String format, String movie_genre, String firm_rating, int active_date) {
+    public boolean addMovie( String movie_name, String language, String format, String movie_genre, String firm_rating, double movie_price) {
         try {
 
-            PreparedStatement ps = connection.prepareStatement("insert into movie(movie_id, movie_name, language, format, movie_genre, firm_rating, active_date)values(?,?,?,?,?,?,?)");
-            ps.setInt(1, movie_id);
-            ps.setString(2, movie_name);
-            ps.setString(3, language);
-            ps.setString(4, format);
-            ps.setString(5, movie_genre );
-            ps.setString(6, firm_rating);
-            ps.setInt(7, active_date);
-//            int rowCount = ps.executeUpdate();
+            PreparedStatement ps = connection.prepareStatement("insert into movie( movie_name, language, format, movie_genre, firm_rating)values(?,?,?,?,?)");
+            ps.setString(1, movie_name);
+            ps.setString(2, language);
+            ps.setString(3, format);
+            ps.setString(4, movie_genre );
+            ps.setString(5, firm_rating);
 
+            int rowCount = ps.executeUpdate();
+
+            ps = connection.prepareStatement("insert into moviePrice (movie_price)values(?)");
+            ps.setDouble(1, movie_price);
+            int rowCount2 = ps.executeUpdate();
             System.out.println("YAY");
+
             connection.commit();
             ps.close();
+
+
             return true;
 
         } catch (SQLException e) {

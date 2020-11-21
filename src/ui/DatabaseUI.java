@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 public class DatabaseUI extends JFrame implements DatabaseDelegate {
 
@@ -31,6 +32,7 @@ public class DatabaseUI extends JFrame implements DatabaseDelegate {
         JButton seatButton = new JButton("seat");
         JButton orderButton = new JButton("order");
         JButton ticketButton = new JButton("ticket");
+        JButton movieButton = new JButton("Movie");
 
 
         JButton customerButton = new JButton("Customers");
@@ -140,7 +142,7 @@ public class DatabaseUI extends JFrame implements DatabaseDelegate {
         c.insets = new Insets(0, 0, 10, 0);
         gb.setConstraints(generateOrderButton, c);
         contentPane.add(generateOrderButton);
-        generateOrderButton.addActionListener(e -> this.delegate.createReservation("theatre1", "2012", "English", "2D", "Mike",8 ));
+        generateOrderButton.addActionListener(e -> this.delegate.createReservation("theater1", "2012", "English", "2D", "Lily",13 , "E09", "7", "2020-05-09 11:49:45"));
 
         //button test for branchRevenue
         JButton branchRevenueButton = new JButton("branch_Revenue");
@@ -174,6 +176,48 @@ public class DatabaseUI extends JFrame implements DatabaseDelegate {
         contentPane.add(CustomerAllMovieButton);
         CustomerAllMovieButton.addActionListener(e -> this.delegate.customerAllMovie());
 
+
+        //button test for show movies
+        JButton showMovieButton = new JButton("Show movie table join moviePrice table");
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0, 0, 10, 0);
+        gb.setConstraints(showMovieButton, c);
+        contentPane.add(showMovieButton);
+        showMovieButton.addActionListener(e -> {
+            try {
+                this.delegate.showMovie();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
+
+        //button test for show cash
+        JButton showCashButton = new JButton("Cash");
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0, 0, 10, 0);
+        gb.setConstraints(showCashButton, c);
+        contentPane.add(showCashButton);
+        showCashButton.addActionListener(e -> {
+            try {
+                this.delegate.showCash();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
+
+        //button test for show card
+        JButton showCardButton = new JButton("Card");
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0, 0, 10, 0);
+        gb.setConstraints(showCardButton, c);
+        contentPane.add(showCardButton);
+        showCardButton.addActionListener(e -> {
+            try {
+                this.delegate.showCard();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
 
 
 
@@ -355,7 +399,9 @@ public class DatabaseUI extends JFrame implements DatabaseDelegate {
 
             }
 
-            @Override
+
+
+    @Override
             public void updateCustomer(int id, String[] updateInfo) {
 
             }
@@ -371,7 +417,7 @@ public class DatabaseUI extends JFrame implements DatabaseDelegate {
             }
 
             @Override
-            public boolean createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id) {
+            public boolean createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id, String seat_id, String hall_id, String movie_start_time) {
                 return false;
             }
 
@@ -392,6 +438,20 @@ public class DatabaseUI extends JFrame implements DatabaseDelegate {
 
             @Override
             public void customerAllMovie() {
+
+            }
+
+            @Override
+            public void showMovie() {
+
+            }
+            @Override
+            public void showCash() {
+
+            }
+
+            @Override
+            public void showCard() {
 
             }
 

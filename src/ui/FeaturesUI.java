@@ -12,7 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
+import java.sql.SQLException;
 
 
 public class FeaturesUI extends JFrame {
@@ -127,6 +127,8 @@ public class FeaturesUI extends JFrame {
 
                 }
 
+
+
                 @Override
                 public void updateCustomer(int id, String[] updateInfo) {
 
@@ -143,7 +145,7 @@ public class FeaturesUI extends JFrame {
                 }
 
                 @Override
-                public boolean createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id) {
+                public boolean createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id, String seat_id, String hall_id, String movie_start_time ) {
                     return false;
                 }
 
@@ -169,6 +171,20 @@ public class FeaturesUI extends JFrame {
                 }
 
                 @Override
+                public void showMovie() {
+
+                }
+                @Override
+                public void showCash() {
+
+                }
+
+                @Override
+                public void showCard() {
+
+                }
+
+                @Override
                 public boolean deleteMovie(String moviename) {
                     return false;
                 }
@@ -183,8 +199,8 @@ public class FeaturesUI extends JFrame {
             new OperationUI().showFrame(new OperationDelegate() {
 
                 @Override
-                public boolean addMovie(int movie_id, String movie_anme, String language, String format, String movie_genre, String firm_rating, int active_date) {
-                    return dbHandler.addMovie(movie_id, movie_anme, language, format, movie_genre, firm_rating, active_date);
+                public boolean addMovie(  String movie_name, String language, String format, String movie_genre, String firm_rating, double movie_price) {
+                    return dbHandler.addMovie( movie_name, language, format, movie_genre, firm_rating, movie_price);
                 }
 
                 @Override
@@ -240,6 +256,20 @@ public class FeaturesUI extends JFrame {
                     ShowOrderUI ui = new ShowOrderUI((models));
                     ui.showFrame();
                 }
+                @Override
+                public void showMovie() throws SQLException {
+                    dbHandler.showMovie();
+                }
+
+                @Override
+                public void showCash() throws SQLException {
+                    dbHandler.showCash();
+                }
+
+                @Override
+                public void showCard() throws SQLException {
+                    dbHandler.showCard ();
+                }
 
                 @Override
                 public void updateCustomer(int id, String[] updateInfo) {
@@ -257,8 +287,8 @@ public class FeaturesUI extends JFrame {
                 }
 
                 @Override
-                public boolean createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id) {
-                    return dbHandler.createReservation (  branch_name,  movie_name, movie_language, movie_format, customer_name , payment_id);
+                public boolean createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id, String seat_id, String hall_id, String movie_start_time) {
+                    return dbHandler.createReservation (  branch_name,  movie_name, movie_language, movie_format, customer_name , payment_id, seat_id, hall_id, movie_start_time);
                 }
 
                 @Override
