@@ -422,18 +422,18 @@ public class DatabaseUI extends JFrame implements DatabaseDelegate {
             }
 
             @Override
-            public BranchRevenueModel[] branchRevenue() {
-                return new BranchRevenueModel[0];
+            public void branchRevenue() {
+
             }
 
             @Override
-            public BranchTicketModel[] branchTicket() {
-                return new BranchTicketModel[0];
+            public void branchTicket() {
+
             }
 
             @Override
-            public FormatPrice[] formatPrice() {
-                return new FormatPrice[0];
+            public void formatPrice() {
+
             }
 
             @Override

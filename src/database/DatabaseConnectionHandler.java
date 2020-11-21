@@ -14,7 +14,7 @@ public class DatabaseConnectionHandler extends JFrame {
     //    private static final String ORACLE_URL = "jdbc:oracle:thin:@localhost:1522:stu";
     private static final String ORACLE_URL = "jdbc:mysql://localhost:3306/304movie?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
     private static final String ORACLE_USERNAME = "root";
-    private static final String ORACLE_PASSWORD = "einstein";
+    private static final String ORACLE_PASSWORD = "esther417";
 
     private static final String EXCEPTION_TAG = "[EXCEPTION]";
     private static final String WARNING_TAG = "[WARNING]";
@@ -403,73 +403,168 @@ public class DatabaseConnectionHandler extends JFrame {
     }
 
     //branch 营业额---report--show all branches
-    public BranchRevenueModel[] branchRevenue (){
+    public void branchRevenue (){
         ArrayList<BranchRevenueModel> models = new ArrayList<>();
         String sql;
         String branch;
         double amount;
 
         sql = "select th.branch_name, sum(p.payment_amount)\n" +
-                "from theatre th, reservation r, payment p\n" +
+                "from theater th, reservation r, payment p\n" +
                 "where th.branch_name = r.branch_name and r.payment_id = p.payment_id\n" +
                 "group by th.branch_name";
         try {
            // System.out.println(sql);
             Statement  statement = connection.createStatement();
             ResultSet res = statement.executeQuery(sql);
+            String[][] tableContent = new String[50][2];
+            int i = 0;
+            while (res.next()) {
+                tableContent[i][0] = res.getString(1);
+                tableContent[i][1] = res.getString(2);
 
-            while ( res.next()) {
-                branch = res.getString(1);
-                System.out.println(branch);
-
-                amount = res.getDouble(2);
-                System.out.println(amount);
-                BranchRevenueModel model = new BranchRevenueModel(branch, amount);
-                models.add(model);
+                i++;
             }
             res.close();
             statement.close();
+
+            String[] names = {
+                    "Theater branch name",
+                    "Revenue"
+            };
+
+            JTable table = new JTable(tableContent, names);
+            JScrollPane scrollPane = new JScrollPane(table) {
+                @Override
+                public Dimension getPreferredSize() {
+                    return new Dimension(1200, 600);
+                }
+            };
+            JPanel contentPane = new JPanel();
+            this.setContentPane(contentPane);
+
+            // layout components using the GridBag layout manager
+            GridBagLayout gb = new GridBagLayout();
+            GridBagConstraints c = new GridBagConstraints();
+
+            contentPane.setLayout(gb);
+            contentPane.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+
+            // place the pane
+            c.gridwidth = GridBagConstraints.REMAINDER;
+            c.insets = new Insets(0, 0, 0, 0);
+            gb.setConstraints(scrollPane, c);
+            contentPane.add(scrollPane);
+
+            // size the window to obtain a best fit for the components
+            this.pack();
+
+            // center the frame
+            Dimension d = this.getToolkit().getScreenSize();
+            Rectangle r = this.getBounds();
+            this.setLocation((d.width - r.width) / 2, (d.height - r.height) / 2);
+
+            // make the window visible
+            this.setVisible(true);
+//            while ( res.next()) {
+//                branch = res.getString(1);
+//                System.out.println(branch);
+//
+//                amount = res.getDouble(2);
+//                System.out.println(amount);
+//                BranchRevenueModel model = new BranchRevenueModel(branch, amount);
+//                models.add(model);
+//            }
+//            res.close();
+//            statement.close();
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
-        return models.toArray(new BranchRevenueModel[models.size()]);
+     //   return models.toArray(new BranchRevenueModel[models.size()]);
     }
-    //show the sold tickets for each branch, only show the branch sells more than 3 tickets
-    public BranchTicketModel[] branchticket (){
+    //show the sold tickets for each branch, only show the branch sells more than 1 tickets
+    public void branchticket (){
         ArrayList<BranchTicketModel> models = new ArrayList<>();
         String sql;
         String branch;
         int ticket;
 
         sql = "select th.branch_name, COUNT(ticket_number)\n" +
-                "from theatre th, ticket t, reservation r\n" +
+                "from theater th, ticket t, reservation r\n" +
                 "where th.branch_name = r.branch_name and t.confirmation_number = r.confirmation_number\n" +
                 "group by th.branch_name\n" +
-                "having count(ticket_number) > 3";
+                "having count(ticket_number) > 1";
         try {
             // System.out.println(sql);
             Statement  statement = connection.createStatement();
             ResultSet res = statement.executeQuery(sql);
+            String[][] tableContent = new String[50][2];
+//            while ( res.next()) {
+//                branch = res.getString(1);
+//                System.out.println(branch);
+//
+//                ticket = res.getInt(2);
+//                System.out.println(ticket);
+//                BranchTicketModel model = new BranchTicketModel(branch, ticket);
+//                models.add(model);
+//            }
 
-            while ( res.next()) {
-                branch = res.getString(1);
-                System.out.println(branch);
+            int i = 0;
+            while (res.next()) {
+                tableContent[i][0] = res.getString(1);
+                tableContent[i][1] = res.getString(2);
 
-                ticket = res.getInt(2);
-                System.out.println(ticket);
-                BranchTicketModel model = new BranchTicketModel(branch, ticket);
-                models.add(model);
+                i++;
             }
             res.close();
             statement.close();
+
+            String[] names = {
+                    "Theater branch name",
+                    "Ticket number"
+            };
+
+            JTable table = new JTable(tableContent, names);
+            JScrollPane scrollPane = new JScrollPane(table) {
+                @Override
+                public Dimension getPreferredSize() {
+                    return new Dimension(1200, 600);
+                }
+            };
+            JPanel contentPane = new JPanel();
+            this.setContentPane(contentPane);
+
+            // layout components using the GridBag layout manager
+            GridBagLayout gb = new GridBagLayout();
+            GridBagConstraints c = new GridBagConstraints();
+
+            contentPane.setLayout(gb);
+            contentPane.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+
+            // place the pane
+            c.gridwidth = GridBagConstraints.REMAINDER;
+            c.insets = new Insets(0, 0, 0, 0);
+            gb.setConstraints(scrollPane, c);
+            contentPane.add(scrollPane);
+
+            // size the window to obtain a best fit for the components
+            this.pack();
+
+            // center the frame
+            Dimension d = this.getToolkit().getScreenSize();
+            Rectangle r = this.getBounds();
+            this.setLocation((d.width - r.width) / 2, (d.height - r.height) / 2);
+
+            // make the window visible
+            this.setVisible(true);
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
-        return models.toArray(new BranchTicketModel[models.size()]);
+        //return models.toArray(new BranchTicketModel[models.size()]);
     }
 
     //find average price for 2d and 3d movies, requiring each format has at least 2 movies
-    public FormatPrice[] formatPrice (){
+    public void formatPrice (){
         ArrayList<FormatPrice> models = new ArrayList<>();
         String sql;
         String format;
@@ -486,22 +581,70 @@ public class DatabaseConnectionHandler extends JFrame {
             // System.out.println(sql);
             Statement  statement = connection.createStatement();
             ResultSet res = statement.executeQuery(sql);
+            String[][] tableContent = new String[50][2];
+//            while (res.next()) {
+//                format = res.getString(1);
+//                System.out.println(format);
+//
+//                price = res.getInt(2);
+//                System.out.println(price);
+//                FormatPrice model = new FormatPrice(format,  price);
+//                models.add(model);
+//            }
 
+
+            int i = 0;
             while (res.next()) {
-                format = res.getString(1);
-                System.out.println(format);
+                tableContent[i][0] = res.getString(1);
+                tableContent[i][1] = res.getString(2);
 
-                price = res.getInt(2);
-                System.out.println(price);
-                FormatPrice model = new FormatPrice(format,  price);
-                models.add(model);
+                i++;
             }
             res.close();
             statement.close();
+
+            String[] names = {
+                    "MovieFormat",
+                    "Avg_Price"
+            };
+
+            JTable table = new JTable(tableContent, names);
+            JScrollPane scrollPane = new JScrollPane(table) {
+                @Override
+                public Dimension getPreferredSize() {
+                    return new Dimension(1200, 600);
+                }
+            };
+            JPanel contentPane = new JPanel();
+            this.setContentPane(contentPane);
+
+            // layout components using the GridBag layout manager
+            GridBagLayout gb = new GridBagLayout();
+            GridBagConstraints c = new GridBagConstraints();
+
+            contentPane.setLayout(gb);
+            contentPane.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+
+            // place the pane
+            c.gridwidth = GridBagConstraints.REMAINDER;
+            c.insets = new Insets(0, 0, 0, 0);
+            gb.setConstraints(scrollPane, c);
+            contentPane.add(scrollPane);
+
+            // size the window to obtain a best fit for the components
+            this.pack();
+
+            // center the frame
+            Dimension d = this.getToolkit().getScreenSize();
+            Rectangle r = this.getBounds();
+            this.setLocation((d.width - r.width) / 2, (d.height - r.height) / 2);
+
+            // make the window visible
+            this.setVisible(true);
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
-        return models.toArray(new FormatPrice[models.size()]);
+       // return models.toArray(new FormatPrice[models.size()]);
     }
 
     //find the customer information for who bought all movies
@@ -535,6 +678,8 @@ public class DatabaseConnectionHandler extends JFrame {
             }
             res.close();
             statement.close();
+
+
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }

@@ -144,98 +144,30 @@ public class FeaturesUI extends JFrame {
 
             dbHandler = new DatabaseConnectionHandler();
             dbHandler.connectToOracle();
-            new ReportUI().showFrame(new DatabaseDelegate() {
+            new ReportUI().showFrame(new ReportDelegate() {
                 @Override
-                public void showCustomers() {
-
+                public void branchRevenue() {
+                     dbHandler.branchRevenue();
                 }
 
                 @Override
-                public void showHalls() {
-
+                public void branchTicket() {
+                     dbHandler.branchticket();
                 }
 
                 @Override
-                public void showTheaters() {
+                public void formatPrice() {
 
-                }
-
-                @Override
-                public void showTickets() {
-
-                }
-
-                @Override
-                public void showSeats() {
-
-                }
-
-                @Override
-                public void showOrders() {
-
-                }
-
-
-
-                @Override
-                public void updateCustomer(int id, String[] updateInfo) {
-
-                }
-
-                @Override
-                public int makePaymentCash(int amount) {
-                    return 0;
-                }
-
-                @Override
-                public int makePaymentCard(int amount, String cardnumber, String cvv) {
-                    return 0;
-                }
-
-                @Override
-                public boolean createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id, String seat_id, String hall_id, String movie_start_time ) {
-                    return false;
-                }
-
-                @Override
-                public BranchRevenueModel[] branchRevenue() {
-                    return dbHandler.branchRevenue();
-                }
-
-                @Override
-                public BranchTicketModel[] branchTicket() {
-                    return dbHandler.branchticket();
-                }
-
-
-                @Override
-                public FormatPrice[] formatPrice() {
-                    return new FormatPrice[0];
+                    dbHandler.formatPrice();
                 }
 
                 @Override
                 public void customerAllMovie() {
-
+                    CustomerModel[] models = dbHandler.customerAllMovie();
+                    CustomersAllMovieUI ui = new CustomersAllMovieUI((models));
+                    ui.showFrame();
                 }
 
-                @Override
-                public void showMovie() {
-
-                }
-                @Override
-                public void showCash() {
-
-                }
-
-                @Override
-                public void showCard() {
-
-                }
-
-                @Override
-                public boolean deleteMovie(String moviename) {
-                    return false;
-                }
             });
         });
 
@@ -345,18 +277,18 @@ public class FeaturesUI extends JFrame {
                 }
 
                 @Override
-                public BranchRevenueModel[] branchRevenue() {
-                    return dbHandler.branchRevenue();
+                public void branchRevenue() {
+                     dbHandler.branchRevenue();
                 }
 
                 @Override
-                public BranchTicketModel[] branchTicket() {
-                    return dbHandler.branchticket();
+                public void branchTicket() {
+                     dbHandler.branchticket();
                 }
 
                 @Override
-                public FormatPrice[] formatPrice() {
-                    return dbHandler.formatPrice();
+                public void formatPrice() {
+                    dbHandler.formatPrice();
                 }
 
                 @Override

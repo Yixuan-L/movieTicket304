@@ -1,7 +1,10 @@
 package ui;
 
 import database.DatabaseConnectionHandler;
-import delegates.DatabaseDelegate;
+
+
+import delegates.ReportDelegate;
+
 import model.BranchRevenueModel;
 import model.BranchTicketModel;
 import model.FormatPrice;
@@ -11,23 +14,18 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class ReportUI extends JFrame implements DatabaseDelegate {
+public class ReportUI extends JFrame implements ReportDelegate {
     private DatabaseConnectionHandler dbHandler;
-    private DatabaseDelegate delegate;
+    private ReportDelegate delegate;
     public ReportUI() {
         super("Generate Report");
         dbHandler = new DatabaseConnectionHandler();
         dbHandler.connectToOracle();
     }
 
-    public void showFrame(DatabaseDelegate delegate) {
+    public void showFrame(ReportDelegate delegate) {
 
-        JButton addMovie = new JButton("Branch Revenue");
-        JButton deleteMovie = new JButton("Branch Ticket");
-//        JButton seatButton = new JButton("seat");
-//        JButton orderButton = new JButton("order");
-//        JButton ticketButton = new JButton("ticket");
-
+        this.delegate = delegate;
 
 
         JPanel contentPane = new JPanel();
@@ -56,6 +54,25 @@ public class ReportUI extends JFrame implements DatabaseDelegate {
         contentPane.add(branchTicketButton);
         branchTicketButton.addActionListener(e -> this.delegate.branchTicket());
 
+        //button test for branchRevenue
+        JButton formatPriceButton = new JButton("movieFormat_Price");
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0, 0, 10, 0);
+        gb.setConstraints(formatPriceButton, c);
+        contentPane.add(formatPriceButton);
+        formatPriceButton.addActionListener(e -> this.delegate.formatPrice());
+
+        //button test for branchRevenue
+        //button test for customer buy all movies
+        JButton CustomerAllMovieButton = new JButton("Customer_all_movie");
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0, 0, 10, 0);
+        gb.setConstraints(CustomerAllMovieButton, c);
+        contentPane.add(CustomerAllMovieButton);
+        CustomerAllMovieButton.addActionListener(e -> this.delegate.customerAllMovie());
+
+
+
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
@@ -76,83 +93,17 @@ public class ReportUI extends JFrame implements DatabaseDelegate {
     }
 
     @Override
-    public void showCustomers() {
+    public void branchRevenue() {
 
     }
 
     @Override
-    public void showMovie() {
-
-    }
-    @Override
-    public void showCash() {
+    public void branchTicket() {
 
     }
 
     @Override
-    public void showHalls() {
-
-    }
-
-    @Override
-    public void showCard() {
-
-    }
-    @Override
-    public void showTheaters() {
-
-    }
-
-    @Override
-    public void showTickets() {
-
-    }
-
-    @Override
-    public void showSeats() {
-
-    }
-
-    @Override
-    public void showOrders() {
-
-    }
-
-
-
-    @Override
-    public void updateCustomer(int id, String[] updateInfo) {
-
-    }
-
-    @Override
-    public int makePaymentCash(int amount) {
-        return 0;
-    }
-
-    @Override
-    public int makePaymentCard(int amount, String cardnumber, String cvv) {
-        return 0;
-    }
-
-    @Override
-    public boolean createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id, String seat_id, String hall_id, String movie_start_time) {
-        return false;
-    }
-
-    @Override
-    public BranchRevenueModel[] branchRevenue() {
-        return new BranchRevenueModel[0];
-    }
-
-    @Override
-    public BranchTicketModel[] branchTicket() {
-        return new BranchTicketModel[0];
-    }
-
-    @Override
-    public FormatPrice[] formatPrice() {
-        return new FormatPrice[0];
+    public void formatPrice() {
     }
 
     @Override
@@ -160,8 +111,4 @@ public class ReportUI extends JFrame implements DatabaseDelegate {
 
     }
 
-    @Override
-    public boolean deleteMovie(String moviename) {
-        return false;
-    }
 }
