@@ -1,9 +1,7 @@
 package ui;
 
 import database.DatabaseConnectionHandler;
-import delegates.DatabaseDelegate;
-import delegates.FeaturesDelegate;
-import delegates.OperationDelegate;
+import delegates.*;
 import model.BranchRevenueModel;
 import model.BranchTicketModel;
 import model.FormatPrice;
@@ -92,8 +90,58 @@ public class FeaturesUI extends JFrame {
         gb.setConstraints(report, c);
         contentPane.add(report);
 
+        searchButton.addActionListener(e -> {
+            dbHandler = new DatabaseConnectionHandler();
+            dbHandler.connectToOracle();
+            new SearchUI().showFrame(new SearchDelegate() {
+                @Override
+                public void view(String type, String location) {
+
+                }
+            });
+        });
+
+        accountButton.addActionListener(e -> {
+            dbHandler = new DatabaseConnectionHandler();
+            dbHandler.connectToOracle();
+            new AccountUI().showFrame(new AccountDelegate() {
+
+                @Override
+                public void updateAccount(String name, String address, String email, String phone) {
+
+                }
+
+                @Override
+                public void signupAccount() {
+
+                }
+            });
+        });
+
+        reserveButton.addActionListener(e -> {
+            dbHandler= new DatabaseConnectionHandler();
+            dbHandler.connectToOracle();
+            new ReservationUI().showFrame(new OperationDelegate() {
+                @Override
+                public boolean addMovie(String movie_name, String language, String format, String movie_genre, String firm_rating, String active_Date) {
+                    return false;
+                }
+
+                @Override
+                public boolean deleteMovie(String movie_name) {
+                    return false;
+                }
+
+                @Override
+                public void reserve(String text, String text1, String text2, String text3, String text4) {
+
+                }
+            });
+                }
+        );
+
         report.addActionListener(e -> {
-            this.dispose();
+
             dbHandler = new DatabaseConnectionHandler();
             dbHandler.connectToOracle();
             new ReportUI().showFrame(new DatabaseDelegate() {
@@ -193,25 +241,30 @@ public class FeaturesUI extends JFrame {
 
 
         operation.addActionListener(e -> {
-            this.dispose();
+
             dbHandler = new DatabaseConnectionHandler();
             dbHandler.connectToOracle();
             new OperationUI().showFrame(new OperationDelegate() {
 
                 @Override
-                public boolean addMovie(  String movie_name, String language, String format, String movie_genre, String firm_rating, double movie_price) {
-                    return dbHandler.addMovie( movie_name, language, format, movie_genre, firm_rating, movie_price);
+                public boolean addMovie(String movie_name, String language, String format, String movie_genre, String firm_rating, String active_Date) {
+                    return false;
                 }
 
                 @Override
                 public boolean deleteMovie(String moviename) {
                     return dbHandler.deleteMovie(moviename);
                 }
+
+                @Override
+                public void reserve(String text, String text1, String text2, String text3, String text4) {
+
+                }
             });
         });
 
         database.addActionListener(e -> {
-            this.dispose();
+
             dbHandler = new DatabaseConnectionHandler();
             dbHandler.connectToOracle();
             new DatabaseUI().showFrame(new DatabaseDelegate() {

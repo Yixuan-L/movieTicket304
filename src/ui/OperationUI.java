@@ -46,7 +46,22 @@ public class OperationUI extends JFrame{
         c.insets = new Insets(0, 0, 10, 0);
         gb.setConstraints(addMovie, c);
         contentPane.add(addMovie);
-        addMovie.addActionListener(e -> this.delegate.addMovie("2013","Englsih","2D","Disaster", "G", 50));
+        addMovie.addActionListener(e -> new AddMovieUI().showFrame(new OperationDelegate() {
+            @Override
+            public boolean addMovie(String movie_name, String language, String format, String movie_genre, String firm_rating, String active_Date) {
+                return false;
+            }
+
+            @Override
+            public boolean deleteMovie(String movie_name) {
+                return false;
+            }
+
+            @Override
+            public void reserve(String text, String text1, String text2, String text3, String text4) {
+
+            }
+        }));
 
 
         // place the hall button
@@ -54,8 +69,23 @@ public class OperationUI extends JFrame{
         c.insets = new Insets(0, 0, 10, 0);
         gb.setConstraints(deleteMovie, c);
         contentPane.add(deleteMovie);
-        deleteMovie.addActionListener(e -> this.delegate.deleteMovie("2012"));
+//        deleteMovie.addActionListener(e -> this.delegate.deleteMovie("2012"));
+        deleteMovie.addActionListener(e -> new RemoveMovieUI().showFrame(new OperationDelegate() {
+            @Override
+            public boolean addMovie(String movie_name, String language, String format, String movie_genre, String firm_rating, String active_Date) {
+                return false;
+            }
 
+            @Override
+            public boolean deleteMovie(String movie_name) {
+                return false;
+            }
+
+            @Override
+            public void reserve(String text, String text1, String text2, String text3, String text4) {
+
+            }
+        }));
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 System.exit(0);
