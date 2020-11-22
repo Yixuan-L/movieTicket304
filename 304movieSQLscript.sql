@@ -48,7 +48,9 @@ insert into movie(movie_name, language, format, movie_genre, firm_rating) values
 ('Alone', 'English', '2D', 'Scary', 'G'),
 ('Alone', 'French', '2D', 'Disaster', 'G'),
 ('Titanic', 'English', '2D', 'Romance', 'G'),
-('Titanic', 'French', '2D', 'Romance', 'G');
+('Titanic', 'French', '2D', 'Romance', 'G'),
+('Aquaman', 'English', '3D', 'Action', 'G'),
+('The Lion King', 'English', '3D', 'Animation', 'G');
 
 
 create table moviePrice(
@@ -56,7 +58,7 @@ create table moviePrice(
   movie_price double,
   foreign key(movie_id) references movie(movie_id) on delete cascade on update cascade
 );
-insert into moviePrice( movie_price) values (35.0), (40.0), (30.0), (30.0), (35.0), (45.0) ;
+insert into moviePrice( movie_price) values (35.0), (40.0), (30.0), (30.0), (35.0), (45.0), (50.0), (55.0) ;
 -- delete from movie where movie_id=4;
 
 
@@ -71,12 +73,19 @@ insert into payment(payment_amount)values
 (30.0),
 (30.0),
 (30.0),
+
+(30.0),
+(35.0),
 (35.0),
 (40.0),
 (30.0),
 (30.0),
+
+(40.0),
 (30.0),
-(30.0);
+(45.0),
+(50.0),
+(55.0);
 
 create table cash(
   payment_id integer primary key,
@@ -89,9 +98,15 @@ insert into cash(payment_id, payment_amount) values
 (1, 35.0),
 (2, 40.0),
 (3, 30.0),
-(7, 35.0),
-(8, 40.0),
-(9, 30.0);
+(7, 30.0),
+(8, 35.0),
+(9, 35.0),
+
+(13, 40.0),
+(14, 30.0),
+(15, 45.0),
+(16, 50.0),
+(17, 55.0);
 
 create table card(
   payment_id integer primary key,
@@ -127,12 +142,20 @@ insert into reservation(order_time, branch_name, movie_id, payment_id, customer_
 ('20201114140000', 'theater2', 4, 4, 4),
 ('20201116200000', 'theater1', 3, 5, 5),
 ('20201116200000', 'theater1', 4, 6, 5),
-('20201208120000', 'theater3', 3, 7, 1),
-('20201209120000', 'theater3', 5, 8, 1),
-('20201212143000', 'theater3', 1, 9, 6),
-('20201214140000', 'theater2', 2, 10, 7),
-('20201216200000', 'theater1', 3, 11, 6),
-('20201216200000', 'theater1', 4, 12, 7);
+
+('20201117120000', 'theater3', 3, 7, 1),
+('20201117123000', 'theater3', 5, 8, 1),
+('20201118143000', 'theater3', 1, 9, 6),
+('20201118144000', 'theater2', 2, 10, 7),
+('20201118200000', 'theater1', 3, 11, 6),
+('20201119200000', 'theater1', 4, 12, 7),
+
+('20201120090000', 'theater1', 2, 13, 1),
+('20201120140000', 'theater2', 4, 14, 1),
+('20201120200000', 'theater3', 6, 15, 1),
+('20201221040000', 'theater3', 7, 16, 1),
+('20201221210000', 'theater2', 8, 17, 1);
+
 
 
 create table ticket(
@@ -151,12 +174,19 @@ insert into ticket(confirmation_number, movie_start_time, seat_id, hall_id) valu
 (4, '20201115140000', 'D01', '4' ),
 (5, '20201117100000', 'B10', '3' ),
 (6, '20201117200000', 'F08', '4' ),
-(7, '20201008130000', 'D07', '1' ),
-(8, '20201110120000', 'F01', '2' ),
+
+(7, '20201201130000', 'D07', '1' ),
+(8, '20201202120000', 'F01', '2' ),
 (9, '20201113143000', 'A04', '3' ),
 (10, '20201115140000', 'D11', '4' ),
 (11, '20201117100000', 'B12', '3' ),
-(12, '20201117200000', 'F01', '4' );
+(12, '20201117200000', 'F01', '4' ),
+
+(13, '20201121100000', 'B12', '3' ),
+(14, '20201122100000', 'A9', '2' ),
+(15, '20201122100000', 'B12', '3' ),
+(16, '20201124100000', 'G12', '7' ),
+(17, '20201125100000', 'F10', '5' );
 
 
 
