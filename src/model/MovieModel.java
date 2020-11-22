@@ -11,22 +11,22 @@ public class MovieModel {
     private String rating;
 
 
-    public MovieModel(String name, String language, String format, String genre, String rating) {
+    public MovieModel(Integer movieid, String name, String language, String format, String genre) {
         this.movieid = movieid;
         this.format = format;
-        this.price = price;
+//        this.price = price;
         this.name = name;
         this.language = language;
         this.genre = genre;
 
-        this.rating = rating;
+//        this.rating = rating;
 
     }
 
 //    public MovieModel(String string, String string1, String string2, String string3, String string4) {
 //    }
 
-    public int getMovieid() {
+    public Integer getMovieid() {
         return movieid;
     }
 

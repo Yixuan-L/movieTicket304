@@ -5,30 +5,35 @@ import model.MovieModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class searchResultUI extends JFrame {
 
-    private MovieModel[] models;
+//    private MovieModel[] models;
+    private ArrayList<MovieModel> models;
 
-    public searchResultUI(MovieModel[] models) {
+    public searchResultUI(ArrayList<MovieModel> models) {
         super("Search Result");
         this.models = models;
     }
 
+    public searchResultUI(MovieModel[] view) {
+    }
+
 
     public void showFrame() {
-        System.out.println(models[0]);
-        System.out.println(models[1]);
-        System.out.println(models[2]);
-        System.out.println(models[3]);
-        System.out.println(models[4]);
-        String[][] tableContent = new String[models.length][5];
-        for (int i = 0; i < models.length; i++) {
-            tableContent[i][0] = String.valueOf(models[i].getMovieid());
-            tableContent[i][1] = models[i].getName().strip();
-            tableContent[i][2] = models[i].getLanguage().strip();
-            tableContent[i][3] = models[i].getFormat().strip();
-            tableContent[i][4] = models[i].getGenre().strip();
+//        System.out.println(models[0]);
+//        System.out.println(models[1]);
+//        System.out.println(models[2]);
+//        System.out.println(models[3]);
+//        System.out.println(models[4]);
+        String[][] tableContent = new String[models.size()][5];
+        for (int i = 0; i < models.size(); i++) {
+            tableContent[i][0] = String.valueOf(models.get(i).getMovieid()).strip();
+            tableContent[i][1] = models.get(i).getName().strip();
+            tableContent[i][2] = models.get(i).getLanguage().strip();
+            tableContent[i][3] = models.get(i).getFormat().strip();
+            tableContent[i][4] = models.get(i).getGenre().strip();
 
         }
         String[] names = {
@@ -36,7 +41,7 @@ public class searchResultUI extends JFrame {
                 "movie_name",
                 "language",
                 "format",
-                "genre"
+                "movie_genre"
 
         };
         JTable table = new JTable(tableContent, names);

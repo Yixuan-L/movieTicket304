@@ -164,7 +164,7 @@ public class DatabaseConnectionHandler extends JFrame {
         }
     }
 
-    public MovieModel[] view(String type, String input) {
+    public ArrayList<MovieModel> view(String type, String input) {
         ArrayList<MovieModel> models = new ArrayList<>();
 
 //        String sql = "select movie_id from movie where  movie_name = '" + movie_name + "' and language = '" + movie_language + "' and format ='" + movie_format+"'";
@@ -175,11 +175,11 @@ public class DatabaseConnectionHandler extends JFrame {
             if (type == "Movie Name") {
                 sql = "SELECT * FROM movie where movie_name = '" + input +"'";
             } else if (type == "Language") {
-                sql = "SELECT * from MOVIE where language = '" + input +"'";
+                sql = "SELECT * from movie where language = '" + input +"'";
             }else if (type == "Format") {
-                sql = "SELECT * from MOVIE where format '" + input +"'";
+                sql = "SELECT * from movie where format = '" + input +"'";
             }else if (type == "Genre") {
-                sql = "SELECT * from MOVIE where genre ='" + input +"'";
+                sql = "SELECT * from movie where movie_genre ='" + input +"'";
             }
             System.out.println(sql);
 //            String sql = "SELECT type FROM MOVIE";
@@ -192,20 +192,25 @@ public class DatabaseConnectionHandler extends JFrame {
                 System.out.println(rs.getString(4));
                 System.out.println(rs.getString(5));
                 MovieModel model = new MovieModel(
-                        rs.getString(1),
+                        rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5));
 //
                 models.add(model);
+//                System.out.println(models.size());
             }
             rs.close();
             statement.close();
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
-        return models.toArray(new MovieModel[models.size()]);
+//        System.out.println(models.get(0).toString());
+//        System.out.println(models.get(1).toString());
+//        System.out.println(models.get(3).toString());
+
+        return models;
     }
 
 

@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 
 public class FeaturesUI extends JFrame {
@@ -92,7 +93,7 @@ public class FeaturesUI extends JFrame {
             dbHandler.connectToOracle();
             new SearchUI().showFrame(new SearchDelegate() {
                 @Override
-                public MovieModel[] view(String selectedItem, String type) {
+                public ArrayList<MovieModel> view(String selectedItem, String type) {
                     return dbHandler.view(selectedItem, type);
 
 

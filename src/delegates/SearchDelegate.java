@@ -2,7 +2,9 @@ package delegates;
 
 import model.MovieModel;
 
+import java.util.ArrayList;
+
 public interface SearchDelegate {
-    MovieModel[] view(String selectedItem, String type);
+    ArrayList<MovieModel> view(String selectedItem, String type);
     void show();
 }
