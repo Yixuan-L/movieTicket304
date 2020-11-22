@@ -2,9 +2,6 @@ package ui;
 
 import database.DatabaseConnectionHandler;
 import delegates.*;
-import model.BranchRevenueModel;
-import model.BranchTicketModel;
-import model.FormatPrice;
 import model.*;
 import javax.swing.*;
 import java.awt.*;
@@ -95,9 +92,26 @@ public class FeaturesUI extends JFrame {
             dbHandler.connectToOracle();
             new SearchUI().showFrame(new SearchDelegate() {
                 @Override
-                public void view(String type, String location) {
+                public MovieModel[] view(String selectedItem, String type) {
+                    return dbHandler.view(selectedItem, type);
+
 
                 }
+
+                @Override
+                public void show() {
+                }
+
+
+//                @Override
+//                public void view(Object selectedItem, String type) {
+//
+//                }
+
+//                @Override
+//                public void view(String type, String location) {
+//
+//                }
             });
         });
 
@@ -107,7 +121,7 @@ public class FeaturesUI extends JFrame {
             new AccountUI().showFrame(new AccountDelegate() {
 
                 @Override
-                public void updateAccount(String name, String address, String email, String phone) {
+                public void updateCustomer(int id, String[] updateInfo) {
 
                 }
 
@@ -122,8 +136,9 @@ public class FeaturesUI extends JFrame {
             dbHandler= new DatabaseConnectionHandler();
             dbHandler.connectToOracle();
             new ReservationUI().showFrame(new OperationDelegate() {
+
                 @Override
-                public boolean addMovie(String movie_name, String language, String format, String movie_genre, String firm_rating, String active_Date) {
+                public boolean addMovie(String movie_name, String language, String format, String movie_genre, String firm_rating, double price) {
                     return false;
                 }
 
@@ -179,8 +194,8 @@ public class FeaturesUI extends JFrame {
             new OperationUI().showFrame(new OperationDelegate() {
 
                 @Override
-                public boolean addMovie(String movie_name, String language, String format, String movie_genre, String firm_rating, String active_Date) {
-                    return false;
+                public boolean addMovie(String movie_name, String language, String format, String movie_genre, String firm_rating, double price) {
+                    return dbHandler.addMovie(movie_name, language, format, movie_genre,firm_rating, price);
                 }
 
                 @Override
@@ -258,7 +273,7 @@ public class FeaturesUI extends JFrame {
 
                 @Override
                 public void updateCustomer(int id, String[] updateInfo) {
-                    dbHandler.updateCustomer(id, updateInfo);
+//                    dbHandler.updateCustomer(id, updateInfo);
                 }
 
                 @Override

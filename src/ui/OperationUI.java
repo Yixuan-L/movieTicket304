@@ -48,8 +48,8 @@ public class OperationUI extends JFrame{
         contentPane.add(addMovie);
         addMovie.addActionListener(e -> new AddMovieUI().showFrame(new OperationDelegate() {
             @Override
-            public boolean addMovie(String movie_name, String language, String format, String movie_genre, String firm_rating, String active_Date) {
-                return false;
+            public boolean addMovie(String movie_name, String language, String format, String movie_genre, String firm_rating, double price) {
+                return dbHandler.addMovie(movie_name, language, format, movie_genre,firm_rating, price);
             }
 
             @Override
@@ -72,7 +72,7 @@ public class OperationUI extends JFrame{
 //        deleteMovie.addActionListener(e -> this.delegate.deleteMovie("2012"));
         deleteMovie.addActionListener(e -> new RemoveMovieUI().showFrame(new OperationDelegate() {
             @Override
-            public boolean addMovie(String movie_name, String language, String format, String movie_genre, String firm_rating, String active_Date) {
+            public boolean addMovie(String movie_name, String language, String format, String movie_genre, String firm_rating, double price) {
                 return false;
             }
 

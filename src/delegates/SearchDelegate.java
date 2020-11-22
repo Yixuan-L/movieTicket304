@@ -1,5 +1,8 @@
 package delegates;
 
+import model.MovieModel;
+
 public interface SearchDelegate {
-    void view(String type, String location);
+    MovieModel[] view(String selectedItem, String type);
+    void show();
 }

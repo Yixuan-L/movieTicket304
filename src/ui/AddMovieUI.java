@@ -143,7 +143,7 @@ public class AddMovieUI extends JFrame {
                 formatField.getText(),
                 genreField.getText(),
                 ratingField.getText(),
-                activeField.getText()
+                Double.parseDouble(activeField.getText())
         ));
 
         // size the window to obtain a best fit for the components

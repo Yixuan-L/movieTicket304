@@ -3,18 +3,14 @@ package database;
 import model.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.*;
 import java.sql.*;
 import java.util.ArrayList;
-import com.mysql.jdbc.Driver;
-
-import javax.swing.*;
 
 public class DatabaseConnectionHandler extends JFrame {
     //    private static final String ORACLE_URL = "jdbc:oracle:thin:@localhost:1522:stu";
     private static final String ORACLE_URL = "jdbc:mysql://localhost:3306/304movie?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
     private static final String ORACLE_USERNAME = "root";
-    private static final String ORACLE_PASSWORD = "esther417";
+    private static final String ORACLE_PASSWORD = "einstein";
 
     private static final String EXCEPTION_TAG = "[EXCEPTION]";
     private static final String WARNING_TAG = "[WARNING]";
@@ -122,6 +118,10 @@ public class DatabaseConnectionHandler extends JFrame {
 //            for(int i = 0; i < column.length; i++){
 //
 //            }
+//            updateInfo = new String[]{"hello", "444 dunbar street", "dfjkdj@gmail.com", "999-999-9999"};
+            System.out.println(id);
+            System.out.println(updateInfo[0]);
+            System.out.println("HAY");
             String query = "Update customer set name = ?, address = ?, email = ?, phoneNumber= ? where customer_id= ?";
             PreparedStatement ps = connection.prepareStatement(query);
             ps.setString(1, updateInfo[0]);
@@ -142,6 +142,70 @@ public class DatabaseConnectionHandler extends JFrame {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
         }
+    }
+
+
+    public boolean checkRent(String rentId) {
+        boolean result;
+        try {
+            String sql = "SELECT * FROM RENTALS WHERE RENT_ID = '" + rentId + "'";
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            result = rs.next();
+
+            rs.close();
+            statement.close();
+
+            return result;
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            return false;
+        }
+    }
+
+    public MovieModel[] view(String type, String input) {
+        ArrayList<MovieModel> models = new ArrayList<>();
+
+//        String sql = "select movie_id from movie where  movie_name = '" + movie_name + "' and language = '" + movie_language + "' and format ='" + movie_format+"'";
+//        System.out.println(sql);
+        try {
+            String sql = null;
+
+            if (type == "Movie Name") {
+                sql = "SELECT * FROM movie where movie_name = '" + input +"'";
+            } else if (type == "Language") {
+                sql = "SELECT * from MOVIE where language = '" + input +"'";
+            }else if (type == "Format") {
+                sql = "SELECT * from MOVIE where format '" + input +"'";
+            }else if (type == "Genre") {
+                sql = "SELECT * from MOVIE where genre ='" + input +"'";
+            }
+            System.out.println(sql);
+//            String sql = "SELECT type FROM MOVIE";
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            while (rs.next()) {
+                System.out.println(rs.getString(1));
+                System.out.println(rs.getString(2));
+                System.out.println(rs.getString(3));
+                System.out.println(rs.getString(4));
+                System.out.println(rs.getString(5));
+                MovieModel model = new MovieModel(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5));
+//
+                models.add(model);
+            }
+            rs.close();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+        return models.toArray(new MovieModel[models.size()]);
     }
 
 
@@ -885,17 +949,18 @@ public class DatabaseConnectionHandler extends JFrame {
     public boolean addMovie( String movie_name, String language, String format, String movie_genre, String firm_rating, double movie_price) {
         try {
 
-            PreparedStatement ps = connection.prepareStatement("insert into movie( movie_name, language, format, movie_genre, firm_rating)values(?,?,?,?,?)");
+            PreparedStatement ps = connection.prepareStatement("insert into movie( movie_name, language, format, movie_genre, firm_rating, movie_price)values(?,?,?,?,?,?)");
             ps.setString(1, movie_name);
             ps.setString(2, language);
             ps.setString(3, format);
             ps.setString(4, movie_genre );
             ps.setString(5, firm_rating);
+            ps.setDouble(6, movie_price);
 
             int rowCount = ps.executeUpdate();
 
-            ps = connection.prepareStatement("insert into moviePrice (movie_price)values(?)");
-            ps.setDouble(1, movie_price);
+//            ps = connection.prepareStatement("insert into moviePrice (movie_price)values(?)");
+//            ps.setDouble(1, movie_price);
             int rowCount2 = ps.executeUpdate();
             System.out.println("YAY");
 

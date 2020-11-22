@@ -11,7 +11,7 @@ public class MovieModel {
     private String rating;
 
 
-    public MovieModel(int movieid, String name, String language,String format,  String genre, String rating,double price ) {
+    public MovieModel(String name, String language, String format, String genre, String rating) {
         this.movieid = movieid;
         this.format = format;
         this.price = price;
@@ -22,6 +22,9 @@ public class MovieModel {
         this.rating = rating;
 
     }
+
+//    public MovieModel(String string, String string1, String string2, String string3, String string4) {
+//    }
 
     public int getMovieid() {
         return movieid;
