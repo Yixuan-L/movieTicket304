@@ -78,7 +78,7 @@ public class OperationUI extends JFrame{
 
             @Override
             public boolean deleteMovie(String movie_name) {
-                return false;
+                return dbHandler.deleteMovie(movie_name);
             }
 
             @Override

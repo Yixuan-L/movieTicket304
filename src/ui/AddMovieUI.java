@@ -32,7 +32,7 @@ public class AddMovieUI extends JFrame {
         JLabel formatLabel = new JLabel("Format: ");
         JLabel genreLabel = new JLabel("Genre: ");
         JLabel ratingLabel = new JLabel("Rating: ");
-        JLabel activeLabel = new JLabel("Active Date: ");
+        JLabel activeLabel = new JLabel("Price: ");
 
         nameField = new JTextField(TEXT_FIELD_WIDTH);
         languageField = new JTextField(TEXT_FIELD_WIDTH);
