@@ -152,6 +152,16 @@ public class FeaturesUI extends JFrame {
                 public void reserve(String text, String text1, String text2, String text3, String text4) {
 
                 }
+
+                @Override
+                public int makePaymentCash(int amount) {
+                    return dbHandler.makePaymentCash(amount);
+                }
+
+                @Override
+                public int makePaymentCard(int amount, String cardnumber, String cvv) {
+                    return dbHandler.makePaymentCard(amount, cardnumber, cvv);
+                }
             });
                 }
         );
@@ -208,6 +218,18 @@ public class FeaturesUI extends JFrame {
                 public void reserve(String text, String text1, String text2, String text3, String text4) {
 
                 }
+
+                @Override
+                public int makePaymentCash(int amount) {
+                    return 0;
+                }
+
+                @Override
+                public int makePaymentCard(int amount, String cardnumber, String cvv) {
+                    return 0;
+                }
+
+
             });
         });
 

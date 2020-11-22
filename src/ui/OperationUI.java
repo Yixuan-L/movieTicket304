@@ -61,6 +61,21 @@ public class OperationUI extends JFrame{
             public void reserve(String text, String text1, String text2, String text3, String text4) {
 
             }
+
+            @Override
+            public int makePaymentCash(int amount) {
+                return 0;
+            }
+
+            @Override
+            public int makePaymentCard(int amount, String cardnumber, String cvv) {
+                return 0;
+            }
+//
+//            @Override
+//            public void pay(String payment_type, Integer amount) {
+//
+//            }
         }));
 
 
@@ -85,6 +100,21 @@ public class OperationUI extends JFrame{
             public void reserve(String text, String text1, String text2, String text3, String text4) {
 
             }
+
+            @Override
+            public int makePaymentCash(int amount) {
+                return 0;
+            }
+
+            @Override
+            public int makePaymentCard(int amount, String cardnumber, String cvv) {
+                return 0;
+            }
+
+//            @Override
+//            public void pay(String payment_type, Integer amount) {
+//
+//            }
         }));
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {

@@ -1,25 +1,32 @@
 package ui;
 
+import database.DatabaseConnectionHandler;
 import delegates.OperationDelegate;
-import delegates.SearchDelegate;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ReservationUI extends JFrame {
     private static final int TEXT_FIELD_WIDTH = 20;
-
+    private DatabaseConnectionHandler dbHandler;
     private OperationDelegate delegate;
 
     private JTextField typeField;
     private JTextField locationField;
-    private JTextField dateField;
+    private JTextField lanField;
     private JTextField movie_typeField;
     private JTextField seatField;
+    private JTextField hallField;
+    private JTextField customerField;
+    public Integer payRecord = 0;
 
 
     public ReservationUI() {
         super("Movie Reservation");
+        dbHandler = new DatabaseConnectionHandler();
+        dbHandler.connectToOracle();
     }
 
     public void showFrame(OperationDelegate delegate) {
@@ -27,15 +34,19 @@ public class ReservationUI extends JFrame {
 
         JLabel movieLabel = new JLabel("Movie Name: ");
         JLabel locationLabel = new JLabel("Branch: ");
-        JLabel dateLabel = new JLabel("Date: ");
-        JLabel movie_typeLabel = new JLabel("Movie Type:");
+        JLabel label = new JLabel("Language: ");
+        JLabel movie_typeLabel = new JLabel("Movie Format:");
         JLabel seatLabel = new JLabel("Seat: ");
+        JLabel customerLabel = new JLabel("Customer Name: ");
+        JLabel paymentLabel = new JLabel("Payment ID: ");
+        JLabel hallLabel = new JLabel("Hall: ");
+        JLabel movieTime = new JLabel("Movie Start Time: ");
 
 
         typeField = new JTextField(TEXT_FIELD_WIDTH);
         movie_typeField = new JTextField(TEXT_FIELD_WIDTH);
         locationField = new JTextField(TEXT_FIELD_WIDTH);
-        dateField = new JTextField(TEXT_FIELD_WIDTH);
+        lanField = new JTextField(TEXT_FIELD_WIDTH);
         seatField = new JTextField(TEXT_FIELD_WIDTH);
 
         JButton viewButton = new JButton("Reserve");
@@ -76,14 +87,14 @@ public class ReservationUI extends JFrame {
 
         c.gridwidth = GridBagConstraints.CENTER;
         c.insets = new Insets(0, 0, 0, 10);
-        gb.setConstraints(dateLabel, c);
-        contentPane.add(dateLabel);
+        gb.setConstraints(label, c);
+        contentPane.add(label);
 
         // place the from date field
         c.gridwidth = GridBagConstraints.REMAINDER;
         c.insets = new Insets(0, 0, 0, 0);
-        gb.setConstraints(dateField, c);
-        contentPane.add(dateField);
+        gb.setConstraints(lanField, c);
+        contentPane.add(lanField);
 
         c.gridwidth = GridBagConstraints.CENTER;
         c.insets = new Insets(0, 0, 0, 10);
@@ -115,13 +126,57 @@ public class ReservationUI extends JFrame {
         contentPane.add(viewButton);
 
         // register customer button with action event handler
-        viewButton.addActionListener(e -> this.delegate.reserve(
-                typeField.getText(),
-                locationField.getText(),
-                dateField.getText(),
-                movie_typeField.getText(),
-                seatField.getText()
-        ));
+//        viewButton.addActionListener(e -> this.delegate.reserve(
+//                typeField.getText(),
+//                locationField.getText(),
+//                lanField.getText(),
+//                movie_typeField.getText(),
+//                seatField.getText()
+//        ));
+
+        viewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                PaymentUI paymentUI = new PaymentUI();
+
+                paymentUI.showFrame(new OperationDelegate() {
+
+                    @Override
+                    public boolean addMovie(String movie_name, String language, String format, String movie_genre, String firm_rating, double price) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean deleteMovie(String movie_name) {
+                        return false;
+                    }
+
+                    @Override
+                    public void reserve(String text, String text1, String text2, String text3, String text4) {
+
+                    }
+
+                    @Override
+                    public int makePaymentCash(int amount) {
+                        return 0;
+                    }
+
+                    @Override
+                    public int makePaymentCard(int amount, String cardnumber, String cvv) {
+                        return 0;
+                    }
+
+
+
+
+
+
+                });
+                System.out.println("YYYYYYY" + paymentUI.payment.toString());
+                payRecord = paymentUI.payment;
+                System.out.println("YYYYYYY" + payRecord.toString());
+            }
+        });
 
         // size the window to obtain a best fit for the components
         this.pack();
