@@ -19,6 +19,7 @@ public class CashUI extends JFrame {
     private JTextField genreField;
     private JTextField ratingField;
     private JTextField activeField;
+    public Integer s1;
 
     public CashUI() {
         super("CashUI");
@@ -170,6 +171,8 @@ public class CashUI extends JFrame {
 
         // make the window visible
         this.setVisible(true);
+
+
 
     }
 

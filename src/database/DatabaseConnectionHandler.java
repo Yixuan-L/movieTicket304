@@ -17,6 +17,8 @@ public class DatabaseConnectionHandler extends JFrame {
 
     private Connection connection = null;
 
+    public Integer pmt;
+
     public DatabaseConnectionHandler() {
         try {
             DriverManager.registerDriver(new oracle.jdbc.driver.OracleDriver());
@@ -363,7 +365,9 @@ public class DatabaseConnectionHandler extends JFrame {
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
-        return id;
+
+        pmt = id;
+        return pmt;
     }
 
 
@@ -400,7 +404,8 @@ public class DatabaseConnectionHandler extends JFrame {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
         System.out.println(id);
-        return id;
+        pmt = id;
+        return pmt;
     }
 
 

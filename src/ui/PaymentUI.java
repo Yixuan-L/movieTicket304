@@ -19,7 +19,7 @@ public class PaymentUI extends JFrame {
     private JTextField genreField;
     private JTextField ratingField;
     private JTextField activeField;
-    public Integer payment = 0;
+    public Integer payment;
 
     public PaymentUI() {
         super("PaymentUI");
@@ -27,7 +27,7 @@ public class PaymentUI extends JFrame {
         dbHandler.connectToOracle();
     }
 
-    public void showFrame(OperationDelegate delegate) {
+    public void showFrame() {
         this.delegate = delegate;
         JLabel nameLabel = new JLabel("Payment Type: ");
         JLabel priceLabel = new JLabel("Amount: ");
@@ -154,7 +154,34 @@ public class PaymentUI extends JFrame {
                                        public void actionPerformed(ActionEvent e) {
                                            if (jcombo.getSelectedItem().toString() == "Card") {
                                                CardUI ui = new CardUI();
-                                               payment = ui.showFrame();
+                                               ui.showFrame(new OperationDelegate() {
+                                                   @Override
+                                                   public boolean addMovie(String movie_name, String language, String format, String movie_genre, String firm_rating, double price) {
+                                                       return false;
+                                                   }
+
+                                                   @Override
+                                                   public boolean deleteMovie(String movie_name) {
+                                                       return false;
+                                                   }
+
+                                                   @Override
+                                                   public void reserve(String text, String text1, String text2, String text3, String text4) {
+
+                                                   }
+
+                                                   @Override
+                                                   public int makePaymentCash(int amount) {
+                                                       return 0;
+                                                   }
+
+                                                   @Override
+                                                   public int makePaymentCard(int amount, String cardnumber, String cvv) {
+                                                       payment = dbHandler.makePaymentCard(amount, cardnumber, cvv);
+                                                       System.out.println("CARD" + payment.toString());
+                                                       return payment;
+                                                   }
+                                               });
 //                                               new CardUI().showFrame() {
 //
 //                                                   @Override
@@ -185,7 +212,8 @@ public class PaymentUI extends JFrame {
                                            }
 
                                            else if (jcombo.getSelectedItem().toString() == "Cash") {
-                                               new CashUI().showFrame(new OperationDelegate() {
+                                               CashUI ui = new CashUI();
+                                               ui.showFrame(new OperationDelegate() {
                                                    @Override
                                                    public boolean addMovie(String movie_name, String language, String format, String movie_genre, String firm_rating, double price) {
                                                        return false;
@@ -213,6 +241,34 @@ public class PaymentUI extends JFrame {
                                                        return 0;
                                                    }
                                                });
+//                                               new CashUI().showFrame(new OperationDelegate() {
+//                                                   @Override
+//                                                   public boolean addMovie(String movie_name, String language, String format, String movie_genre, String firm_rating, double price) {
+//                                                       return false;
+//                                                   }
+//
+//                                                   @Override
+//                                                   public boolean deleteMovie(String movie_name) {
+//                                                       return false;
+//                                                   }
+//
+//                                                   @Override
+//                                                   public void reserve(String text, String text1, String text2, String text3, String text4) {
+//
+//                                                   }
+//
+//                                                   @Override
+//                                                   public int makePaymentCash(int amount) {
+//                                                       payment = dbHandler.makePaymentCash(amount);
+//                                                       System.out.println("CASH" + payment.toString());
+//                                                       return payment;
+//                                                   }
+//
+//                                                   @Override
+//                                                   public int makePaymentCard(int amount, String cardnumber, String cvv) {
+//                                                       return 0;
+//                                                   }
+//                                               });
                                            }
                                        }
                                    }
@@ -236,37 +292,37 @@ public class PaymentUI extends JFrame {
 
     public static void main(String[] args) {
         PaymentUI paymentUI = new PaymentUI();
-        paymentUI.showFrame(new OperationDelegate() {
-            @Override
-            public boolean addMovie(String movie_name, String language, String format, String movie_genre, String firm_rating, double price) {
-                return false;
-            }
-
-            @Override
-            public boolean deleteMovie(String movie_name) {
-                return false;
-            }
-
-            @Override
-            public void reserve(String text, String text1, String text2, String text3, String text4) {
-
-            }
-
-            @Override
-            public int makePaymentCash(int amount) {
-                return 0;
-            }
-
-            @Override
-            public int makePaymentCard(int amount, String cardnumber, String cvv) {
-                return 0;
-            }
-
+//        paymentUI.showFrame(new OperationDelegate() {
 //            @Override
-//            public void pay(String payment_type, Integer amount) {
+//            public boolean addMovie(String movie_name, String language, String format, String movie_genre, String firm_rating, double price) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean deleteMovie(String movie_name) {
+//                return false;
+//            }
+//
+//            @Override
+//            public void reserve(String text, String text1, String text2, String text3, String text4) {
 //
 //            }
-        });
+//
+//            @Override
+//            public int makePaymentCash(int amount) {
+//                return 0;
+//            }
+//
+//            @Override
+//            public int makePaymentCard(int amount, String cardnumber, String cvv) {
+//                return 0;
+//            }
+//
+////            @Override
+////            public void pay(String payment_type, Integer amount) {
+////
+////            }
+//        });
 //        SearchUI searchUI = new SearchUI();
 //        searchUI.showFrame(new SearchDelegate() {
 //            @Override

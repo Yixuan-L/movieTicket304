@@ -138,42 +138,11 @@ public class ReservationUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 PaymentUI paymentUI = new PaymentUI();
+                paymentUI.showFrame();
 
-                paymentUI.showFrame(new OperationDelegate() {
-
-                    @Override
-                    public boolean addMovie(String movie_name, String language, String format, String movie_genre, String firm_rating, double price) {
-                        return false;
-                    }
-
-                    @Override
-                    public boolean deleteMovie(String movie_name) {
-                        return false;
-                    }
-
-                    @Override
-                    public void reserve(String text, String text1, String text2, String text3, String text4) {
-
-                    }
-
-                    @Override
-                    public int makePaymentCash(int amount) {
-                        return 0;
-                    }
-
-                    @Override
-                    public int makePaymentCard(int amount, String cardnumber, String cvv) {
-                        return 0;
-                    }
-
-
-
-
-
-
-                });
+//                payRecord = paymentUI.showFrame();
                 System.out.println("YYYYYYY" + paymentUI.payment.toString());
-                payRecord = paymentUI.payment;
+                payRecord = dbHandler.pmt;
                 System.out.println("YYYYYYY" + payRecord.toString());
             }
         });

@@ -26,7 +26,7 @@ public class CardUI extends JFrame{
         dbHandler.connectToOracle();
     }
 
-    public int showFrame() {
+    public void showFrame(OperationDelegate delegate) {
         this.delegate = delegate;
         JLabel nameLabel = new JLabel("Payment Type: ");
         JLabel priceLabel = new JLabel("Amount: ");
@@ -151,7 +151,7 @@ public class CardUI extends JFrame{
         addMovie.addActionListener(new ActionListener() {
                                        @Override
                                        public void actionPerformed(ActionEvent e) {
-                                                activeField = delegate.makePaymentCard(Integer.valueOf(amountField.getText()), formatField.getText(), genreField.getText() );
+                                                delegate.makePaymentCard(Integer.valueOf(amountField.getText()), formatField.getText(), genreField.getText() );
 
 
                                            }
@@ -170,7 +170,6 @@ public class CardUI extends JFrame{
 
         // make the window visible
         this.setVisible(true);
-        return activeField;
-    }
 
+    }
 }
