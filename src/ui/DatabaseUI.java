@@ -1,15 +1,10 @@
 package ui;
 
-import database.DatabaseConnectionHandler;
 import delegates.DatabaseDelegate;
 import delegates.FeaturesDelegate;
-import delegates.OperationDelegate;
-import model.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.SQLException;
 
 public class DatabaseUI extends JFrame implements DatabaseDelegate {
@@ -417,8 +412,8 @@ public class DatabaseUI extends JFrame implements DatabaseDelegate {
             }
 
             @Override
-            public boolean createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id, String seat_id, String hall_id, String movie_start_time) {
-                return false;
+            public String createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id, String seat_id, String hall_id, String movie_start_time) {
+                return "";
             }
 
             @Override

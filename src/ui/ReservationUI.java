@@ -243,25 +243,45 @@ public class ReservationUI extends JFrame {
                 }
 
                 @Override
-                public boolean createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id, String seat_id, String hall_id, String movie_start_time) {
-                    return false;
+                public String createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id, String seat_id, String hall_id, String movie_start_time) {
+                    return "";
                 }
+
+//                @Override
+//                public boolean createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id, String seat_id, String hall_id, String movie_start_time) {
+//                    return false;
+//                }
             });
         });
 
 
-        viewButton.addActionListener( e -> {
-            this.delegate.createReservation(
-                    locationField.getText(),
-                    typeField.getText(),
-                    lanField.getText(),
-                    movie_typeField.getText(),
-                    customerField.getText(),
-                    Integer.parseInt(paymentField.getText()),
-                    seatField.getText(),
-                    hallField.getText(),
-                    movie_StartField.getText()
-            );
+        viewButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+
+                JDialog frame = new JDialog();//构造一个新的JFrame，作为新窗口。
+                frame.setBounds(contentPane.getBounds());
+                JLabel jl = new JLabel();// 注意类名别写错了。
+                frame.getContentPane().add(jl);
+                jl.setText(delegate.createReservation(
+                        locationField.getText(),
+                        typeField.getText(),
+                        lanField.getText(),
+                        movie_typeField.getText(),
+                        customerField.getText(),
+                        Integer.parseInt(paymentField.getText()),
+                        seatField.getText(),
+                        hallField.getText(),
+                        movie_StartField.getText()
+                ));
+                jl.setVerticalAlignment(JLabel.CENTER);
+                jl.setHorizontalAlignment(JLabel.CENTER);// 注意方法名别写错了。
+                // 参数 APPLICATION_MODAL：阻塞同一 Java 应用程序中的所有顶层窗口（它自己的子层次
+                frame.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);    // 设置模式类型。
+                frame.setVisible(true);
+
+            }
         }
         );
 

@@ -183,9 +183,14 @@ public class PaymentUI extends JFrame {
                                                    }
 
                                                    @Override
-                                                   public boolean createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id, String seat_id, String hall_id, String movie_start_time) {
-                                                       return false;
+                                                   public String createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id, String seat_id, String hall_id, String movie_start_time) {
+                                                       return "";
                                                    }
+
+//                                                   @Override
+//                                                   public boolean createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id, String seat_id, String hall_id, String movie_start_time) {
+//                                                       return false;
+//                                                   }
                                                });
 //                                               new CardUI().showFrame() {
 //
@@ -247,9 +252,14 @@ public class PaymentUI extends JFrame {
                                                    }
 
                                                    @Override
-                                                   public boolean createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id, String seat_id, String hall_id, String movie_start_time) {
-                                                       return false;
+                                                   public String createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id, String seat_id, String hall_id, String movie_start_time) {
+                                                       return "";
                                                    }
+
+//                                                   @Override
+//                                                   public boolean createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id, String seat_id, String hall_id, String movie_start_time) {
+//                                                       return false;
+//                                                   }
                                                });
 //                                               new CashUI().showFrame(new OperationDelegate() {
 //                                                   @Override

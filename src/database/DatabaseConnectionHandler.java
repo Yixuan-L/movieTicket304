@@ -147,6 +147,24 @@ public class DatabaseConnectionHandler extends JFrame {
     }
 
 
+    public boolean checkRent(String rentId) {
+        boolean result;
+        try {
+            String sql = "SELECT * FROM RENTALS WHERE RENT_ID = '" + rentId + "'";
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            result = rs.next();
+
+            rs.close();
+            statement.close();
+
+            return result;
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            return false;
+        }
+    }
 
     public ArrayList<MovieModel> view(String type, String input) {
         ArrayList<MovieModel> models = new ArrayList<>();
@@ -387,12 +405,13 @@ public class DatabaseConnectionHandler extends JFrame {
         }
         System.out.println(id);
         pmt = id;
-        return id;
+        return pmt;
     }
 
 
 
-    public boolean createReservation ( String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id , String seat_id, String hall_id, String movie_start_time) {
+    public String createReservation ( String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id , String seat_id, String hall_id, String movie_start_time) {
+        int reservation_id = 0;
         try {
 
 
@@ -402,7 +421,7 @@ public class DatabaseConnectionHandler extends JFrame {
             Statement statement = connection.createStatement();
             ResultSet res = statement.executeQuery(sql);
             int movie_id = 0;
-            int reservation_id = 0;
+
             if (res.next()) {
                 movie_id = res.getInt(1);
             }
@@ -452,10 +471,12 @@ public class DatabaseConnectionHandler extends JFrame {
             ps.close();
 
 
+
+
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
         }
-        return false;
+        return "Reservation Successful, Here's your Resservation ID" + reservation_id;
     }
 
     //branch 营业额---report--show all branches
