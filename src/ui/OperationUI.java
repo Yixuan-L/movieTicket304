@@ -71,6 +71,11 @@ public class OperationUI extends JFrame{
             public int makePaymentCard(int amount, String cardnumber, String cvv) {
                 return 0;
             }
+
+            @Override
+            public boolean createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id, String seat_id, String hall_id, String movie_start_time) {
+                return false;
+            }
 //
 //            @Override
 //            public void pay(String payment_type, Integer amount) {
@@ -109,6 +114,11 @@ public class OperationUI extends JFrame{
             @Override
             public int makePaymentCard(int amount, String cardnumber, String cvv) {
                 return 0;
+            }
+
+            @Override
+            public boolean createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id, String seat_id, String hall_id, String movie_start_time) {
+                return false;
             }
 
 //            @Override

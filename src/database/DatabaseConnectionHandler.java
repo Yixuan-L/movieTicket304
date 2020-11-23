@@ -147,24 +147,6 @@ public class DatabaseConnectionHandler extends JFrame {
     }
 
 
-    public boolean checkRent(String rentId) {
-        boolean result;
-        try {
-            String sql = "SELECT * FROM RENTALS WHERE RENT_ID = '" + rentId + "'";
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
-
-            result = rs.next();
-
-            rs.close();
-            statement.close();
-
-            return result;
-        } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-            return false;
-        }
-    }
 
     public ArrayList<MovieModel> view(String type, String input) {
         ArrayList<MovieModel> models = new ArrayList<>();
@@ -367,7 +349,7 @@ public class DatabaseConnectionHandler extends JFrame {
         }
 
         pmt = id;
-        return pmt;
+        return id;
     }
 
 
@@ -405,7 +387,7 @@ public class DatabaseConnectionHandler extends JFrame {
         }
         System.out.println(id);
         pmt = id;
-        return pmt;
+        return id;
     }
 
 

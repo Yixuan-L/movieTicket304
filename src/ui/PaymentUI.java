@@ -63,7 +63,7 @@ public class PaymentUI extends JFrame {
         // theatre button
 
 
-        String [] a = {"Card","Cash"};                //定义字符串
+        String [] a = {"Card"};                //定义字符串
         JComboBox jcombo = new JComboBox(a);                                                //实例化下拉列表
         JList jlist = new JList(a);                                                            //实例化列表框
         //实例化JScrollPane面板
@@ -181,6 +181,11 @@ public class PaymentUI extends JFrame {
                                                        System.out.println("CARD" + payment.toString());
                                                        return payment;
                                                    }
+
+                                                   @Override
+                                                   public boolean createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id, String seat_id, String hall_id, String movie_start_time) {
+                                                       return false;
+                                                   }
                                                });
 //                                               new CardUI().showFrame() {
 //
@@ -239,6 +244,11 @@ public class PaymentUI extends JFrame {
                                                    @Override
                                                    public int makePaymentCard(int amount, String cardnumber, String cvv) {
                                                        return 0;
+                                                   }
+
+                                                   @Override
+                                                   public boolean createReservation(String branch_name, String movie_name, String movie_language, String movie_format, String customer_name, int payment_id, String seat_id, String hall_id, String movie_start_time) {
+                                                       return false;
                                                    }
                                                });
 //                                               new CashUI().showFrame(new OperationDelegate() {

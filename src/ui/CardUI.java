@@ -151,11 +151,23 @@ public class CardUI extends JFrame{
         addMovie.addActionListener(new ActionListener() {
                                        @Override
                                        public void actionPerformed(ActionEvent e) {
-                                                delegate.makePaymentCard(Integer.valueOf(amountField.getText()), formatField.getText(), genreField.getText() );
-
-
-                                           }
+                                           JDialog frame = new JDialog();//构造一个新的JFrame，作为新窗口。
+                                           frame.setBounds(contentPane.getBounds());
+                                           JLabel jl = new JLabel();// 注意类名别写错了。
+                                           frame.getContentPane().add(jl);
+                                           jl.setText(String.valueOf(delegate.makePaymentCard(Integer.valueOf(amountField.getText()), formatField.getText(), genreField.getText())));
+                                           jl.setVerticalAlignment(JLabel.CENTER);
+                                           jl.setHorizontalAlignment(JLabel.CENTER);// 注意方法名别写错了。
+                                           // 参数 APPLICATION_MODAL：阻塞同一 Java 应用程序中的所有顶层窗口（它自己的子层次
+                                           frame.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);    // 设置模式类型。
+                                           frame.setVisible(true);
+//                                           delegate.makePaymentCard(Integer.valueOf(amountField.getText()), formatField.getText(), genreField.getText());
                                        }
+                                   }
+
+
+
+
 
         );
 
