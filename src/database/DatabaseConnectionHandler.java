@@ -147,24 +147,6 @@ public class DatabaseConnectionHandler extends JFrame {
     }
 
 
-    public boolean checkRent(String rentId) {
-        boolean result;
-        try {
-            String sql = "SELECT * FROM RENTALS WHERE RENT_ID = '" + rentId + "'";
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
-
-            result = rs.next();
-
-            rs.close();
-            statement.close();
-
-            return result;
-        } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
-            return false;
-        }
-    }
 
     public ArrayList<MovieModel> view(String type, String input) {
         ArrayList<MovieModel> models = new ArrayList<>();
@@ -199,6 +181,61 @@ public class DatabaseConnectionHandler extends JFrame {
                         rs.getString(3),
                         rs.getString(4),
                         rs.getString(5));
+//
+                models.add(model);
+//                System.out.println(models.size());
+            }
+            rs.close();
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+        }
+//        System.out.println(models.get(0).toString());
+//        System.out.println(models.get(1).toString());
+//        System.out.println(models.get(3).toString());
+
+        return models;
+    }
+
+
+    public ArrayList<MovieModel> project(String type, String c1, String c2, String c3, String input) {
+        ArrayList<MovieModel> models = new ArrayList<>();
+
+//        String sql = "select movie_id from movie where  movie_name = '" + movie_name + "' and language = '" + movie_language + "' and format ='" + movie_format+"'";
+//        System.out.println(sql);
+        try {
+            String sql = null;
+
+//            String a = c1;
+
+
+
+            if (type == "Movie Name") {
+                sql = "SELECT "+c1+", "+c2+", "+c3+" FROM movie where movie_name = '" + input +"'";
+            } else if (type == "Language") {
+                sql = "SELECT c1, c2, c3 from movie where language = '" + input +"'";
+            }else if (type == "Format") {
+                sql = "SELECT c1, c2, c3 from movie where format = '" + input +"'";
+            }else if (type == "Genre") {
+                sql = "SELECT c1, c2, c3 from movie where movie_genre ='" + input +"'";
+            }
+            System.out.println(sql);
+//            String sql = "SELECT type FROM MOVIE";
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            while (rs.next()) {
+//                System.out.println(rs.getString(1));
+//                System.out.println(rs.getString(2));
+//                System.out.println(rs.getString(3));
+//                System.out.println(rs.getString(4));
+//                System.out.println(rs.getString(5));
+                MovieModel model = new MovieModel(
+//                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4)
+//                        rs.getString(5)
+                );
 //
                 models.add(model);
 //                System.out.println(models.size());

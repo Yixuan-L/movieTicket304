@@ -103,6 +103,11 @@ public class FeaturesUI extends JFrame {
                 public void show() {
                 }
 
+                @Override
+                public ArrayList<MovieModel> project(String selectedItem, String c1, String c2, String c3, String type) {
+                    return null;
+                }
+
 
 //                @Override
 //                public void view(Object selectedItem, String type) {
