@@ -10,7 +10,7 @@ public class DatabaseConnectionHandler extends JFrame {
     //    private static final String ORACLE_URL = "jdbc:oracle:thin:@localhost:1522:stu";
     private static final String ORACLE_URL = "jdbc:mysql://localhost:3306/304movie?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
     private static final String ORACLE_USERNAME = "root";
-    private static final String ORACLE_PASSWORD = "einstein";
+    private static final String ORACLE_PASSWORD = "esther417";
 
     private static final String EXCEPTION_TAG = "[EXCEPTION]";
     private static final String WARNING_TAG = "[WARNING]";
@@ -140,6 +140,66 @@ public class DatabaseConnectionHandler extends JFrame {
             connection.commit();
 
             ps.close();
+
+            String sql = "select name, address, email, phoneNumber" +
+                    " from customer" +
+                    " where customer_id = '" + id+"'";
+            Statement statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+            String[][] tableContent = new String[50][7];
+            int i = 0;
+            while (rs.next()) {
+                tableContent[i][0] = rs.getString(1);
+                tableContent[i][1] = rs.getString(2);
+                tableContent[i][2] = rs.getString(3);
+                tableContent[i][3] = rs.getString(4);
+
+                i++;
+            }
+            rs.close();
+            statement.close();
+
+            String[] names = {
+                    "name",
+                    "address",
+                    "email",
+                    "phoneNumber",
+
+            };
+
+            JTable table = new JTable(tableContent, names);
+            JScrollPane scrollPane = new JScrollPane(table) {
+                @Override
+                public Dimension getPreferredSize() {
+                    return new Dimension(1200, 600);
+                }
+            };
+            JPanel contentPane = new JPanel();
+            this.setContentPane(contentPane);
+
+            // layout components using the GridBag layout manager
+            GridBagLayout gb = new GridBagLayout();
+            GridBagConstraints c = new GridBagConstraints();
+
+            contentPane.setLayout(gb);
+            contentPane.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+
+            // place the pane
+            c.gridwidth = GridBagConstraints.REMAINDER;
+            c.insets = new Insets(0, 0, 0, 0);
+            gb.setConstraints(scrollPane, c);
+            contentPane.add(scrollPane);
+
+            // size the window to obtain a best fit for the components
+            this.pack();
+
+            // center the frame
+            Dimension d = this.getToolkit().getScreenSize();
+            Rectangle r = this.getBounds();
+            this.setLocation((d.width - r.width) / 2, (d.height - r.height) / 2);
+
+            // make the window visible
+            this.setVisible(true);
         } catch (SQLException e) {
             System.out.println(EXCEPTION_TAG + " " + e.getMessage());
             rollbackConnection();
@@ -178,11 +238,18 @@ public class DatabaseConnectionHandler extends JFrame {
                 sql = "SELECT * FROM movie where movie_name = '" + input +"'";
             } else if (type == "Language") {
                 sql = "SELECT * from movie where language = '" + input +"'";
-            }else if (type == "Format") {
+//                sql = "SELECT movie_name, format, movie_genre from movie" +
+//                         " where language = 'English' ";
+            }
+            else if (type == "Format") {
                 sql = "SELECT * from movie where format = '" + input +"'";
             }else if (type == "Genre") {
-                sql = "SELECT * from movie where movie_genre ='" + input +"'";
+                sql = "SELECT * from movie where movie_genre ='" + input + "'";
             }
+//          else if (type == "Language") {
+//                sql = "SELECT movie_name, format, movie_genre from movie" +
+//                        " where language = 'English' ";
+
             System.out.println(sql);
 //            String sql = "SELECT type FROM MOVIE";
             Statement statement = connection.createStatement();
@@ -765,7 +832,7 @@ public class DatabaseConnectionHandler extends JFrame {
 
 
    public void showMovie() throws SQLException {
-       String sql = "SELECT movie.movie_id,movie.movie_name,movie.language,movie.format,movie.movie_genre,movie.firm_rating, moviePrice.movie_price FROM movie, moviePrice where movie.movie_id = moviePrice.movie_id";
+       String sql = "SELECT movie.movie_name,movie.format,moviePrice.movie_price FROM movie, moviePrice where movie.movie_id = moviePrice.movie_id";
        Statement statement = connection.createStatement();
        ResultSet rs = statement.executeQuery(sql);
        String[][] tableContent = new String[50][7];
@@ -774,22 +841,19 @@ public class DatabaseConnectionHandler extends JFrame {
            tableContent[i][0] = rs.getString(1);
            tableContent[i][1] = rs.getString(2);
            tableContent[i][2] = rs.getString(3);
-           tableContent[i][3] = rs.getString(4);
-           tableContent[i][4] =  rs.getString(5);
-           tableContent[i][5] =  rs.getString(6);
-           tableContent[i][6] =  rs.getString(7);
-                   i++;
+
+           i++;
        }
        rs.close();
        statement.close();
 
        String[] names = {
-               "MovieID",
+
                "MovieName",
-               "Language",
+
                "Format",
-               "General",
-               "Rating",
+
+
                "Price"
        };
 
@@ -962,18 +1026,18 @@ public class DatabaseConnectionHandler extends JFrame {
     public boolean addMovie( String movie_name, String language, String format, String movie_genre, String firm_rating, double movie_price) {
         try {
 
-            PreparedStatement ps = connection.prepareStatement("insert into movie( movie_name, language, format, movie_genre, firm_rating, movie_price)values(?,?,?,?,?,?)");
+            PreparedStatement ps = connection.prepareStatement("insert into movie( movie_name, language, format, movie_genre, firm_rating)values(?,?,?,?,?)");
             ps.setString(1, movie_name);
             ps.setString(2, language);
             ps.setString(3, format);
             ps.setString(4, movie_genre );
             ps.setString(5, firm_rating);
-            ps.setDouble(6, movie_price);
+
 
             int rowCount = ps.executeUpdate();
 
-//            ps = connection.prepareStatement("insert into moviePrice (movie_price)values(?)");
-//            ps.setDouble(1, movie_price);
+            ps = connection.prepareStatement("insert into moviePrice (movie_price)values(?)");
+            ps.setDouble(1, movie_price);
             int rowCount2 = ps.executeUpdate();
             System.out.println("YAY");
 

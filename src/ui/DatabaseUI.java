@@ -51,17 +51,17 @@ public class DatabaseUI extends JFrame implements DatabaseDelegate {
         gb.setConstraints(theatreButton, c);
         contentPane.add(theatreButton);
 
-        // place the hall button
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.insets = new Insets(0, 0, 10, 0);
-        gb.setConstraints(hallButton, c);
-        contentPane.add(hallButton);
-
-        // place the seat button
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.insets = new Insets(0, 0, 10, 0);
-        gb.setConstraints(seatButton, c);
-        contentPane.add(seatButton);
+//        // place the hall button
+//        c.gridwidth = GridBagConstraints.REMAINDER;
+//        c.insets = new Insets(0, 0, 10, 0);
+//        gb.setConstraints(hallButton, c);
+//        contentPane.add(hallButton);
+//
+//        // place the seat button
+//        c.gridwidth = GridBagConstraints.REMAINDER;
+//        c.insets = new Insets(0, 0, 10, 0);
+//        gb.setConstraints(seatButton, c);
+//        contentPane.add(seatButton);
 
         //place the order button
         c.gridwidth = GridBagConstraints.REMAINDER;
@@ -83,6 +83,11 @@ public class DatabaseUI extends JFrame implements DatabaseDelegate {
         c.insets = new Insets(0, 0, 10, 0);
         gb.setConstraints(customerButton, c);
         contentPane.add(customerButton);
+
+//        c.gridwidth = GridBagConstraints.REMAINDER;
+//        c.insets = new Insets(0, 0, 10, 0);
+//        gb.setConstraints(featuresButton, c);
+//        contentPane.add(featuresButton);
 
 
 
@@ -210,10 +215,6 @@ public class DatabaseUI extends JFrame implements DatabaseDelegate {
             }
         });
 
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.insets = new Insets(0, 0, 10, 0);
-        gb.setConstraints(featuresButton, c);
-        contentPane.add(featuresButton);
 
 
         //跳转到功能页面
