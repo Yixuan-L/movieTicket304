@@ -51,17 +51,17 @@ public class DatabaseUI extends JFrame implements DatabaseDelegate {
         gb.setConstraints(theatreButton, c);
         contentPane.add(theatreButton);
 
-        // place the hall button
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.insets = new Insets(0, 0, 10, 0);
-        gb.setConstraints(hallButton, c);
-        contentPane.add(hallButton);
-
-        // place the seat button
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.insets = new Insets(0, 0, 10, 0);
-        gb.setConstraints(seatButton, c);
-        contentPane.add(seatButton);
+//        // place the hall button
+//        c.gridwidth = GridBagConstraints.REMAINDER;
+//        c.insets = new Insets(0, 0, 10, 0);
+//        gb.setConstraints(hallButton, c);
+//        contentPane.add(hallButton);
+//
+//        // place the seat button
+//        c.gridwidth = GridBagConstraints.REMAINDER;
+//        c.insets = new Insets(0, 0, 10, 0);
+//        gb.setConstraints(seatButton, c);
+//        contentPane.add(seatButton);
 
         //place the order button
         c.gridwidth = GridBagConstraints.REMAINDER;
@@ -84,10 +84,11 @@ public class DatabaseUI extends JFrame implements DatabaseDelegate {
         gb.setConstraints(customerButton, c);
         contentPane.add(customerButton);
 
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.insets = new Insets(0, 0, 10, 0);
-        gb.setConstraints(featuresButton, c);
-        contentPane.add(featuresButton);
+//        c.gridwidth = GridBagConstraints.REMAINDER;
+//        c.insets = new Insets(0, 0, 10, 0);
+//        gb.setConstraints(featuresButton, c);
+//        contentPane.add(featuresButton);
+
 
 
         customerButton.addActionListener(e -> this.delegate.showCustomers());
@@ -97,79 +98,79 @@ public class DatabaseUI extends JFrame implements DatabaseDelegate {
         hallButton.addActionListener(e -> this.delegate.showHalls());
         orderButton.addActionListener(e -> this.delegate.showOrders());
 
-        // 暂时直接设置一个按钮测试update customer info
-        JButton updateCustomerButton = new JButton("updateCutomerInfo");
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.insets = new Insets(0, 0, 10, 0);
-        gb.setConstraints(updateCustomerButton, c);
-        contentPane.add(updateCustomerButton);
-        updateCustomerButton.addActionListener(e -> this.delegate.updateCustomer( 1, new String[]{"newname1", "newaddress1", "newemail1", "new2323323"}));
+//        // 暂时直接设置一个按钮测试update customer info
+//        JButton updateCustomerButton = new JButton("updateCutomerInfo");
+//        c.gridwidth = GridBagConstraints.REMAINDER;
+//        c.insets = new Insets(0, 0, 10, 0);
+//        gb.setConstraints(updateCustomerButton, c);
+//        contentPane.add(updateCustomerButton);
+//        updateCustomerButton.addActionListener(e -> this.delegate.updateCustomer( 1, new String[]{"newname1", "newaddress1", "newemail1", "new2323323"}));
 
-        // 暂时直接设置一个按钮测试 user pay by cash
-        JButton payCashButton = new JButton("paycash");
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.insets = new Insets(0, 0, 10, 0);
-        gb.setConstraints(payCashButton, c);
-        contentPane.add(payCashButton);
-        payCashButton.addActionListener(e -> this.delegate.makePaymentCash( 40));
-
-        // 暂时直接设置一个按钮测试 user pay by card
-        JButton payCardButton = new JButton("paycard");
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.insets = new Insets(0, 0, 10, 0);
-        gb.setConstraints(payCardButton, c);
-        contentPane.add(payCardButton);
-        payCardButton.addActionListener(e -> this.delegate.makePaymentCard( 50, "4566778899999999", "998"));
-
-
-        // 暂时直接设置一个按钮测试 delete one movie
-        JButton deleteMovieButton = new JButton("deleteMovie");
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.insets = new Insets(0, 0, 10, 0);
-        gb.setConstraints(deleteMovieButton, c);
-        contentPane.add(deleteMovieButton);
-        deleteMovieButton.addActionListener(e -> this.delegate.deleteMovie("2012"));
+//        // 暂时直接设置一个按钮测试 user pay by cash
+//        JButton payCashButton = new JButton("paycash");
+//        c.gridwidth = GridBagConstraints.REMAINDER;
+//        c.insets = new Insets(0, 0, 10, 0);
+//        gb.setConstraints(payCashButton, c);
+//        contentPane.add(payCashButton);
+//        payCashButton.addActionListener(e -> this.delegate.makePaymentCash( 40));
+//
+//        // 暂时直接设置一个按钮测试 user pay by card
+//        JButton payCardButton = new JButton("paycard");
+//        c.gridwidth = GridBagConstraints.REMAINDER;
+//        c.insets = new Insets(0, 0, 10, 0);
+//        gb.setConstraints(payCardButton, c);
+//        contentPane.add(payCardButton);
+//        payCardButton.addActionListener(e -> this.delegate.makePaymentCard( 50, "4566778899999999", "998"));
 
 
-        // 暂时直接设置一个按钮测试 add reservation (order)
-        JButton generateOrderButton = new JButton("addReservation");
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.insets = new Insets(0, 0, 10, 0);
-        gb.setConstraints(generateOrderButton, c);
-        contentPane.add(generateOrderButton);
-        generateOrderButton.addActionListener(e -> this.delegate.createReservation("theater1", "2012", "English", "2D", "Lily",13 , "E09", "7", "2020-05-09 11:49:45"));
-
-        //button test for branchRevenue
-        JButton branchRevenueButton = new JButton("branch_Revenue");
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.insets = new Insets(0, 0, 10, 0);
-        gb.setConstraints(branchRevenueButton, c);
-        contentPane.add(branchRevenueButton);
-        branchRevenueButton.addActionListener(e -> this.delegate.branchRevenue());
-
-        //button test for branchRevenue
-        JButton branchTicketButton = new JButton("branch_Ticket");
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.insets = new Insets(0, 0, 10, 0);
-        gb.setConstraints(branchTicketButton, c);
-        contentPane.add(branchTicketButton);
-        branchTicketButton.addActionListener(e -> this.delegate.branchTicket());
-
-        //button test for format_price
-        JButton formatPriceButton = new JButton("format_Price");
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.insets = new Insets(0, 0, 10, 0);
-        gb.setConstraints(formatPriceButton, c);
-        contentPane.add(formatPriceButton);
-        formatPriceButton.addActionListener(e -> this.delegate.formatPrice());
-
-        //button test for customer buy all movies
-        JButton CustomerAllMovieButton = new JButton("Customer_all_movie");
-        c.gridwidth = GridBagConstraints.REMAINDER;
-        c.insets = new Insets(0, 0, 10, 0);
-        gb.setConstraints(CustomerAllMovieButton, c);
-        contentPane.add(CustomerAllMovieButton);
-        CustomerAllMovieButton.addActionListener(e -> this.delegate.customerAllMovie());
+//        // 暂时直接设置一个按钮测试 delete one movie
+//        JButton deleteMovieButton = new JButton("deleteMovie");
+//        c.gridwidth = GridBagConstraints.REMAINDER;
+//        c.insets = new Insets(0, 0, 10, 0);
+//        gb.setConstraints(deleteMovieButton, c);
+//        contentPane.add(deleteMovieButton);
+//        deleteMovieButton.addActionListener(e -> this.delegate.deleteMovie("2012"));
+//
+//
+//        // 暂时直接设置一个按钮测试 add reservation (order)
+//        JButton generateOrderButton = new JButton("addReservation");
+//        c.gridwidth = GridBagConstraints.REMAINDER;
+//        c.insets = new Insets(0, 0, 10, 0);
+//        gb.setConstraints(generateOrderButton, c);
+//        contentPane.add(generateOrderButton);
+//        generateOrderButton.addActionListener(e -> this.delegate.createReservation("theater1", "2012", "English", "2D", "Lily",13 , "E09", "7", "2020-05-09 11:49:45"));
+//
+//        //button test for branchRevenue
+//        JButton branchRevenueButton = new JButton("branch_Revenue");
+//        c.gridwidth = GridBagConstraints.REMAINDER;
+//        c.insets = new Insets(0, 0, 10, 0);
+//        gb.setConstraints(branchRevenueButton, c);
+//        contentPane.add(branchRevenueButton);
+//        branchRevenueButton.addActionListener(e -> this.delegate.branchRevenue());
+//
+//        //button test for branchRevenue
+//        JButton branchTicketButton = new JButton("branch_Ticket");
+//        c.gridwidth = GridBagConstraints.REMAINDER;
+//        c.insets = new Insets(0, 0, 10, 0);
+//        gb.setConstraints(branchTicketButton, c);
+//        contentPane.add(branchTicketButton);
+//        branchTicketButton.addActionListener(e -> this.delegate.branchTicket());
+//
+//        //button test for format_price
+//        JButton formatPriceButton = new JButton("format_Price");
+//        c.gridwidth = GridBagConstraints.REMAINDER;
+//        c.insets = new Insets(0, 0, 10, 0);
+//        gb.setConstraints(formatPriceButton, c);
+//        contentPane.add(formatPriceButton);
+//        formatPriceButton.addActionListener(e -> this.delegate.formatPrice());
+//
+//        //button test for customer buy all movies
+//        JButton CustomerAllMovieButton = new JButton("Customer_all_movie");
+//        c.gridwidth = GridBagConstraints.REMAINDER;
+//        c.insets = new Insets(0, 0, 10, 0);
+//        gb.setConstraints(CustomerAllMovieButton, c);
+//        contentPane.add(CustomerAllMovieButton);
+//        CustomerAllMovieButton.addActionListener(e -> this.delegate.customerAllMovie());
 
 
         //button test for show movies
