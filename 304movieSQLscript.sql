@@ -189,5 +189,32 @@ insert into ticket(confirmation_number, movie_start_time, seat_id, hall_id) valu
 (17, '20201125100000', 'F10', '5' );
 
 
+create table hall(
+  hall_id int auto_increment primary key,
+  branch_name varchar(50),
+  seat_amount int,
+  foreign key (branch_name) references theater(branch_name) on update cascade on delete cascade
+);
+insert into hall(branch_name, seat_amount) values
+('theater1', 70),('theater2', 70),('theater3', 70),('theater1', 70),('theater2', 70),('theater3', 70),
+('theater1', 70),('theater2', 70),('theater3', 70),('theater1', 70),('theater2', 70),('theater3', 70);
+create table seat(
+  seat_id int auto_increment primary key,
+  seat_type varchar(10),
+  hall_id int,
+  foreign key (hall_id) references hall(hall_id) on update cascade on delete cascade
+);
+insert into seat(seat_type, hall_id) values
+('normal',1),('normal',1),('normal',1),('normal',1),('normal',1),('normal',1),('normal',1),('normal',1),('normal',1),
+('normal',2),('normal',2),('normal',2),('normal',2),('normal',2),('normal',2),('normal',2),('normal',2),('normal',2),
+('normal',3),('normal',3),('normal',3),('normal',3),('normal',3),('normal',3),('normal',3),('normal',3),('normal',3),
+('normal',4),('normal',4),('normal',4),('normal',4),('normal',4),('normal',4),('normal',4),('normal',4),('normal',4),
+('normal',5),('normal',5),('normal',5),('normal',5),('normal',5),('normal',5),('normal',5),('normal',5),('normal',5),
+('normal',6),('normal',6),('normal',6),('normal',6),('normal',6),('normal',6),('normal',6),('normal',6),('normal',6),
+('normal',7),('normal',7),('normal',7),('normal',7),('normal',7),('normal',7),('normal',7),('normal',7),('normal',7),
+('normal',8),('normal',8),('normal',8),('normal',8),('normal',8),('normal',8),('normal',8),('normal',8),('normal',8);
+
+
+
 
 
