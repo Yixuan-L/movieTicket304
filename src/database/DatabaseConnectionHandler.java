@@ -10,7 +10,7 @@ public class DatabaseConnectionHandler extends JFrame {
     //    private static final String ORACLE_URL = "jdbc:oracle:thin:@localhost:1522:stu";
     private static final String ORACLE_URL = "jdbc:mysql://localhost:3306/304movie?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC";
     private static final String ORACLE_USERNAME = "root";
-    private static final String ORACLE_PASSWORD = "esther417";
+    private static final String ORACLE_PASSWORD = "einstein";
 
     private static final String EXCEPTION_TAG = "[EXCEPTION]";
     private static final String WARNING_TAG = "[WARNING]";
@@ -265,58 +265,110 @@ public class DatabaseConnectionHandler extends JFrame {
     }
 
 
-    public ArrayList<MovieModel> project(String type, String c1, String c2, String c3, String input) {
-        ArrayList<MovieModel> models = new ArrayList<>();
+    public void project(String type, String c1, String c2, String c3, String input) throws SQLException {
+        String sql = "SELECT "+c1+", "+c2+", "+c3+" FROM movie where movie_name = '" + input +"'";
+        Statement statement = connection.createStatement();
+        ResultSet rs = statement.executeQuery(sql);
+        String[][] tableContent = new String[50][7];
+        int i = 0;
+        while (rs.next()) {
+            tableContent[i][0] = rs.getString(1);
+            tableContent[i][1] = rs.getString(2);
+            tableContent[i][2] = rs.getString(3);
 
-//        String sql = "select movie_id from movie where  movie_name = '" + movie_name + "' and language = '" + movie_language + "' and format ='" + movie_format+"'";
-//        System.out.println(sql);
-        try {
-            String sql = null;
-
-//            String a = c1;
-
-
-
-            if (type == "Movie Name") {
-                sql = "SELECT "+c1+", "+c2+", "+c3+" FROM movie where movie_name = '" + input +"'";
-            } else if (type == "Language") {
-                sql = "SELECT c1, c2, c3 from movie where language = '" + input +"'";
-            }else if (type == "Format") {
-                sql = "SELECT c1, c2, c3 from movie where format = '" + input +"'";
-            }else if (type == "Genre") {
-                sql = "SELECT c1, c2, c3 from movie where movie_genre ='" + input +"'";
-            }
-            System.out.println(sql);
-//            String sql = "SELECT type FROM MOVIE";
-            Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
-            while (rs.next()) {
-//                System.out.println(rs.getString(1));
-//                System.out.println(rs.getString(2));
-//                System.out.println(rs.getString(3));
-//                System.out.println(rs.getString(4));
-//                System.out.println(rs.getString(5));
-                MovieModel model = new MovieModel(
-//                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getString(4)
-//                        rs.getString(5)
-                );
-//
-                models.add(model);
-//                System.out.println(models.size());
-            }
-            rs.close();
-            statement.close();
-        } catch (SQLException e) {
-            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+            i++;
         }
-//        System.out.println(models.get(0).toString());
-//        System.out.println(models.get(1).toString());
-//        System.out.println(models.get(3).toString());
+        rs.close();
+        statement.close();
 
-        return models;
+        String[] names = {
+                c1, c2, c3
+        };
+
+        JTable table = new JTable(tableContent, names);
+        JScrollPane scrollPane = new JScrollPane(table) {
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(1200, 600);
+            }
+        };
+        JPanel contentPane = new JPanel();
+        this.setContentPane(contentPane);
+
+        // layout components using the GridBag layout manager
+        GridBagLayout gb = new GridBagLayout();
+        GridBagConstraints c = new GridBagConstraints();
+
+        contentPane.setLayout(gb);
+        contentPane.setBorder(BorderFactory.createEmptyBorder(50, 50, 50, 50));
+
+        // place the pane
+        c.gridwidth = GridBagConstraints.REMAINDER;
+        c.insets = new Insets(0, 0, 0, 0);
+        gb.setConstraints(scrollPane, c);
+        contentPane.add(scrollPane);
+
+        // size the window to obtain a best fit for the components
+        this.pack();
+
+        // center the frame
+        Dimension d = this.getToolkit().getScreenSize();
+        Rectangle r = this.getBounds();
+        this.setLocation((d.width - r.width) / 2, (d.height - r.height) / 2);
+
+        // make the window visible
+        this.setVisible(true);
+//        ArrayList<MovieModel> models = new ArrayList<>();
+//
+////        String sql = "select movie_id from movie where  movie_name = '" + movie_name + "' and language = '" + movie_language + "' and format ='" + movie_format+"'";
+////        System.out.println(sql);
+//        try {
+//            String sql = null;
+//
+////            String a = c1;
+//
+//
+//
+//            if (type == "Movie Name") {
+//                sql = "SELECT "+c1+", "+c2+", "+c3+" FROM movie where movie_name = '" + input +"'";
+//            } else if (type == "Language") {
+//                sql = "SELECT c1, c2, c3 from movie where language = '" + input +"'";
+//            }else if (type == "Format") {
+//                sql = "SELECT c1, c2, c3 from movie where format = '" + input +"'";
+//            }else if (type == "Genre") {
+//                sql = "SELECT c1, c2, c3 from movie where movie_genre ='" + input +"'";
+//            }
+//            System.out.println(sql);
+////            String sql = "SELECT type FROM MOVIE";
+//            Statement statement = connection.createStatement();
+//            ResultSet rs = statement.executeQuery(sql);
+//            while (rs.next()) {
+////                System.out.println(rs.getString(1));
+////                System.out.println(rs.getString(2));
+////                System.out.println(rs.getString(3));
+////                System.out.println(rs.getString(4));
+////                System.out.println(rs.getString(5));
+//                MovieModel model = new MovieModel(
+////                        rs.getInt(1),
+//                        rs.getString(1),
+//                        rs.getString(2),
+//                        rs.getString(3)
+////                        rs.getString(5)
+//                );
+////
+//                models.add(model);
+////                System.out.println(models.size());
+//            }
+//            rs.close();
+//            statement.close();
+//        } catch (SQLException e) {
+//            System.out.println(EXCEPTION_TAG + " " + e.getMessage());
+//        }
+////        System.out.println(models.get(0).toString());
+////        System.out.println(models.get(1).toString());
+////        System.out.println(models.get(3).toString());
+//
+//        return models;
     }
 
 

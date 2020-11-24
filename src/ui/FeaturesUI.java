@@ -104,8 +104,8 @@ public class FeaturesUI extends JFrame {
                 }
 
                 @Override
-                public ArrayList<MovieModel> project(String selectedItem, String c1, String c2, String c3, String type) {
-                    return null;
+                public void project(String selectedItem, String c1, String c2, String c3, String type) {
+
                 }
 
 

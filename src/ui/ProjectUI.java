@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ProjectUI extends JFrame {
@@ -19,10 +20,13 @@ public class ProjectUI extends JFrame {
     private JTextField langField;
     private JTextField formatField;
     private JTextField genreField;
+    private DatabaseConnectionHandler dbHandler;
 
 
     public ProjectUI() {
         super("Project");
+        dbHandler = new DatabaseConnectionHandler();
+        dbHandler.connectToOracle();
     }
 
     public void showFrame(SearchDelegate delegate) {
@@ -167,12 +171,50 @@ public class ProjectUI extends JFrame {
                 System.out.println(jcombo1.getSelectedItem().toString());
                 System.out.println(jcombo2.getSelectedItem().toString());
                 System.out.println(jcombo3.getSelectedItem().toString());
+                try {
 
-                projectResults sui = new projectResults(delegate.project(jcombo.getSelectedItem().toString(), jcombo1.getSelectedItem().toString(),
-                        jcombo2.getSelectedItem().toString(),
-                        jcombo3.getSelectedItem().toString(),
-                        typeField.getText()));
-                sui.showFrame();
+                    String c1 =jcombo1.getSelectedItem().toString();
+                    String c2 =jcombo2.getSelectedItem().toString();
+                    String c3 =jcombo3.getSelectedItem().toString();
+
+                    if (c1 == "Language") {
+                        c1 = "language";
+                    } else if (c1 == "Format") {
+                        c1 = "format";
+                    } else if (c1 == "Genre") {
+                        c1 = "movie_genre";
+                    }
+
+                    if (c2 == "Language") {
+                        c2 = "language";
+                    } else if (c2 == "Format") {
+                        c2 = "format";
+                    } else if (c2 == "Genre") {
+                        c2 = "movie_genre";
+                    }
+
+                    if (c3 == "Language") {
+                        c3 = "language";
+                    } else if (c3 == "Format") {
+                        c3 = "format";
+                    } else if (c3 == "Genre") {
+                        c3 = "movie_genre";
+                    }
+
+                    dbHandler.project(jcombo.getSelectedItem().toString(), c1,
+                            c2,
+                            c3,
+                            typeField.getText());
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+
+//                projectResults sui = new projectResults(delegate.project(jcombo.getSelectedItem().toString(), jcombo1.getSelectedItem().toString(),
+//                        jcombo2.getSelectedItem().toString(),
+//                        jcombo3.getSelectedItem().toString(),
+//                        typeField.getText()));
+//                sui.showFrame();
+
             }
         });
 
@@ -208,7 +250,7 @@ public class ProjectUI extends JFrame {
             }
 
             @Override
-            public ArrayList<MovieModel> project(String selectedItem, String c1, String c2, String c3, String type) {
+            public void project(String selectedItem, String c1, String c2, String c3, String type) throws SQLException {
                 if (c1 == "Language") {
                     c1 = "language";
                 } else if (c1 == "Format") {
@@ -232,7 +274,7 @@ public class ProjectUI extends JFrame {
                 } else if (c3 == "Genre") {
                     c3 = "movie_genre";
                 }
-                return dbHandler.project(selectedItem,c1,c2,c3,type);
+                dbHandler.project(selectedItem, c1, c2, c3, type);
             }
 
 //            @Override
