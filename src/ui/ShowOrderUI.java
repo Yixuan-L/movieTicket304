@@ -19,8 +19,8 @@ public class ShowOrderUI extends JFrame {
         String[][] tableContent = new String[models.length][6];
         for (int i = 0; i < models.length; i++) {
             tableContent[i][0] = models[i].getConfirmid().strip();
-            tableContent[i][1] = models[i].getBranch().strip();
-            tableContent[i][2] = models[i].getTime().strip();
+            tableContent[i][2] = models[i].getBranch().strip();
+            tableContent[i][1] = models[i].getTime().strip();
             tableContent[i][3] = models[i].getMovieid().strip();
             tableContent[i][4] = models[i].getPaymentid().strip();
             tableContent[i][5] = models[i].getCustomerid().strip();
